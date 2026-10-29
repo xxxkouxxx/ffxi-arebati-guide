@@ -2,8 +2,10 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="guide-build" content="407587498f">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Arebati V25 2戦目ガイド</title>
+<meta name="description" content="シェオルジェール Arebati Veng+25 2戦目のLS当日用作戦ガイド（非公式）"><meta property="og:type" content="website"><meta property="og:site_name" content="FFXI Arebati 作戦ガイド"><meta property="og:title" content="Arebati V25 2戦目ガイド"><meta property="og:description" content="ジョブ別の局面行動・NG・タイマー・WS閾値・動画ブックマーク"><meta property="og:url" content="https://xxxkouxxx.github.io/ffxi-arebati-guide/arebati_v25_battle2_guide.html"><meta name="theme-color" content="#4fd1c5">
 <style>
 :root{color-scheme:dark;--bg:#07101b;--panel:#0f1d2c;--panel2:#13263a;--edge:#284058;--muted:#97aec3;--text:#eaf4ff;--brand:#51d7c7;--warn:#f6be69;--danger:#ff7b86;--ok:#5fe0a8;
 --pld:#78aafc;--dnc:#fa76b5;--rdm:#f46e75;--cor:#f6c16d;--brd:#bd98fb;--bst:#70d8ae;--pet:#74ecd8}
@@ -146,15 +148,33 @@ table.mx{border-collapse:separate;border-spacing:0;font-size:12px;min-width:1080
 .bm .nm{flex:1}.bm.cur{background:#173b4a}.bm .unset{color:#6f8aa1}
 .footer{margin-top:20px;font-size:11px;color:#8fabc3;border-top:1px solid #263c4e;padding-top:12px;line-height:1.8}
 .hidden{display:none!important}
+.cmt{border:1px solid #34536e;background:#13283a;border-radius:7px;padding:0 5px;margin-left:6px;font-size:11px;line-height:18px;vertical-align:1px;opacity:.75}
+.cmt:hover,.cmt:focus-visible{opacity:1;background:#24405a}
+.preprow{display:flex;align-items:flex-start;gap:4px}.preprow label{flex:1}
+.dlg{max-width:520px;width:calc(100% - 24px);background:#0f1d2c;color:var(--text);border:1px solid var(--edge);border-radius:16px;padding:16px 18px}
+.dlg::backdrop{background:#000a}
+.dlg h2{margin:0 0 4px;font-size:17px}.dlgnote{font-size:12px;color:var(--muted);margin:0 0 10px}
+.cmtmeta{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;margin:0 0 10px;background:#0b1828;border:1px solid #223a50;border-radius:10px;padding:8px 10px}
+.cmtmeta dt{color:var(--muted);font-weight:700}.cmtmeta dd{margin:0;word-break:break-all}
+.fld{display:block;margin-bottom:8px;font-size:12px;font-weight:700}.fld span{display:block;margin-bottom:3px}
+.fld select,.fld input,.fld textarea,#cmtOut{width:100%;padding:8px;border-radius:9px;background:#0b1d30;border:1px solid #40627a;font-size:14px;font-weight:400}
+#cmtOut{font-size:12px;margin-bottom:8px}
+.dlgbtns{display:flex;justify-content:flex-end;gap:8px}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(20px);background:#0b3637;border:1px solid #277a79;color:#b8ffef;padding:10px 16px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:10;max-width:calc(100% - 32px)}
+#toast.show{opacity:1;transform:translateX(-50%)}
+.gap{border-bottom:1px solid #223a50;padding:9px 2px}.gap .gw{font-size:11px;color:var(--muted)}.gap .gt{font-size:14px}
+#fatal{background:#5a1420;border:2px solid var(--danger);color:#fff;padding:12px 16px;font-size:14px}
 @media(max-width:980px){.grid,.vgrid{grid-template-columns:minmax(0,1fr)}.rules{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.wrap{padding:14px 12px 40px}.rules{gap:6px}.rule{padding:7px 9px;font-size:11px;line-height:1.45}.rule b{font-size:12px}.allgrid{grid-template-columns:1fr}.ptitle{font-size:19px}.acts li{font-size:14px}.jb{padding:6px 11px;font-size:12px}}
 </style>
 </head>
 <body>
+<div id="fatal" class="hidden" role="alert"><b>表示中にエラーが発生しました。</b>再読み込みしても直らない場合は管理者に連絡してください：<code id="fatalMsg"></code></div>
+<script>addEventListener('error',e=>{const f=document.getElementById('fatal');if(f){f.classList.remove('hidden');document.getElementById('fatalMsg').textContent=e.message}})</script>
 <div class="wrap">
 <header class="top">
  <div><div class="kicker">FFXI · SHEOL GAOL AT3 · ODYSSEY</div><h1>Arebati Veng+25 2戦目 作戦ガイド</h1><p class="sub">LS当日用。自分のジョブを選び、合図（HP%）ごとに局面を進めてください。キー操作：← → で局面移動</p></div>
- <a class="btn" href="https://jinko0914.seesaa.net/article/513963925.html" target="_blank" rel="noopener noreferrer">元記事（Part3）↗</a>
+ <div style="display:flex;gap:6px;flex-wrap:wrap"><a class="btn" href="arebati_v25_battle1_guide.html">← 1戦目ガイド</a><a class="btn" href="https://jinko0914.seesaa.net/article/513963925.html" target="_blank" rel="noopener noreferrer">元記事（Part3）↗</a><button class="btn" id="generalComment" type="button">💬 全体への意見</button></div>
 </header>
 
 <section class="rules" aria-label="鉄則">
@@ -170,6 +190,7 @@ table.mx{border-collapse:separate;border-spacing:0;font-size:12px;min-width:1080
  <button class="tab" role="tab" data-tab="matrix" aria-selected="false">ジョブ×局面 一覧表</button>
  <button class="tab" role="tab" data-tab="prep" aria-selected="false">事前チェック</button>
  <button class="tab" role="tab" data-tab="video" aria-selected="false">動画で確認</button>
+ <button class="tab" role="tab" data-tab="gaps" aria-selected="false">不足情報・意見</button>
 </div>
 
 <!-- 戦闘の流れ -->
@@ -194,6 +215,11 @@ table.mx{border-collapse:separate;border-spacing:0;font-size:12px;min-width:1080
 <!-- 事前チェック -->
 <section id="tab-prep" class="hidden">
  <div class="panel"><div class="ph"><div><h2>事前チェックリスト</h2><p>持ち込みインデ・武器・食事・開幕強化。チェックはこの端末に保存されます。</p></div><button class="btn small danger" id="prepReset">チェックを全解除</button></div><div class="pb prepgrid" id="prepBox"></div></div>
+</section>
+
+<!-- 不足情報 -->
+<section id="tab-gaps" class="hidden">
+ <div class="panel"><div class="ph"><div><h2>不足情報・意見 <span class="pno" id="gapsCount"></span></h2><p>記事に書かれていない・LSで方針が決まっていない項目です。知っている人は 💬 から意見を書いてDiscordに貼ってください。ほかの項目にも 💬 があります。</p></div></div><div class="pb" id="gapsBox"></div></div>
 </section>
 
 <!-- 動画 -->
@@ -230,114 +256,12 @@ table.mx{border-collapse:separate;border-spacing:0;font-size:12px;min-width:1080
 const $=id=>document.getElementById(id);
 const NS='http://www.w3.org/2000/svg';
 const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const SRC={A:'記事',M:'記事の動画解析値',P:'旧記事Part1/2',K:'他PT記事',Q:'要確認',X:'記載なし'};
-const GIMMICKS=[
- ['Arebatiは最大HPの75%で出現。釣るだけでは護衛は出ず、1ダメージで護衛がpop'],
- ['HP75%・40%で護衛（ラズ族）pop＋八重霞45秒'],
- ['特殊技のTPしきい値は1000。TP吸収キッスで完封するのが前提'],
- ['ダメージが通るのは突属性の近接・遠隔のみ。属性攻撃は無効','P'],
- ['エフェクト中は氷ベースの連携（硬化・湾曲・闇）を吸収し、HPを70,000以上回復','P'],
- ['強化を消す特殊技が多い','P'],
- ['通常攻撃の追加効果に物理防御ダウン-25%（パナケイアで治す）','P'],
- ['護衛の攻撃力は非常に高い。盾以外に向くとパーティ崩壊のおそれ','P'],
- ['護衛はpop直後しばらく魔法・アビを受け付けない（急いで詠唱するとキャンセルされる）','K'],
-];
-
-// ---- データ（出典：Jinko Part3）。各行動は [文, 出典] 。出典省略時は記事。
-const JOBS=[
- {id:'pld',short:'ナ',name:'ナイト',role:'盾：護衛のタゲ保持',
-  prep:[['持ち込みインデ：インデリジェネ'],['開幕：マジェスティ・プロテスV・シェルIV']]},
- {id:'dnc',short:'踊',name:'踊り子',role:'盾/アタッカー：ボックス維持・ルドラ',
-  prep:[['持ち込みインデ：インデバリア'],['武器：トゥワシュトラ＋グレティナイフRank30'],['食事：牛丼+1が望ましい'],['サンバ：剣の舞い5振り＋ヘイストサンバ5振り']]},
- {id:'rdm',short:'赤',name:'赤魔道士',role:'アタッカー：初撃・寝かせ・弱体',
-  prep:[['持ち込みインデ：インデデック'],['武器：マンダウ一択'],['開幕用にマンダウ以外の短剣も持つ（マンダウは追加効果で毒）','P'],['食事：スコッチエッグ+1'],['サイレス命中用：レジストハック2回以上＋カイロンホーズ'],['開幕強化は1分以内が目安：ヘイストII・ファランクスII・シェルV・ストライII・ゲインスト・リフレシュIII・ストンスキン・アクアベール']]},
- {id:'cor',short:'コ',name:'コルセア',role:'弱体/アタッカー：ロール・遠隔・ワイルドカード',
-  prep:[['持ち込みインデ：インデフューリー'],['武器：ロスタム Type:B／遠隔：フォーマルハウト'],['食事：スコッチエッグ+1'],['ロール順を確認：階段上 クルケ→ランダムディール→カオス／呪歌完成直前 クルケ→サムライ']]},
- {id:'brd',short:'吟',name:'吟遊詩人',role:'支援/アタッカー：呪歌・エレジー・WS調整',
-  prep:[['持ち込みインデ：インデフェンド（詩人か獣のどちらか）'],['武器：カルンウェナン'],['BF突入前にTP3000（アフターマスLv3をすぐ付けられるように）','P'],['食事：スコッチエッグ+1'],['本歌：メヌ3・4・5／栄典／アリア／バラード2＋3']]},
- {id:'bst',short:'獣',name:'獣使い',role:'支援：ペットのTP吸収キッスで特殊技を封じる',
-  prep:[['持ち込みインデ：インデフェンド（詩人か獣のどちらか）'],['汁ペット（TP吸収キッス）の準備'],['ペットの被魔法ダメージカット装備（サイレス切れのブリザガ対策）','P'],['開幕：K.インスティンクト'],['獣本体は攻撃に参加しない']]},
-];
-const ATK=['dnc','rdm','cor','brd'];
-
-// links: [from,to,type]  type: hate/melee/ws/kiss/debuff/sleep
-const PHASES=[
- {id:'p0',hp:'突入後',label:'階段上で強化',title:'階段上で事前強化',trigger:'突入して階段上に集合したら',adds:0,
-  all:[['持ち込みインデを確認'],['戦闘の流れ（順番）を厳守。開幕のヘイト管理は難しい']],
-  jobs:{pld:{tag:'マジェスティ',do:[['マジェスティ、プロテスV、シェルIV']]},
-   dnc:{tag:'待機',do:[['階段上での個別行動は記事に記載なし','X']]},
-   rdm:{tag:'強化',do:[['ヘイストII・ファランクスII・シェルV・ストライII・ゲインスト・リフレシュIII・ストンスキン・アクアベール'],['所要は1分以内が目安']]},
-   cor:{tag:'カオス',do:[['クルケ → ランダムディール（対象：クルケッドカード）→ カオスロール'],['カオスの出目は4か7以上。スネークアイを使ってでも。8（アンラッキー）は避ける'],['2個目のロールはまだ振らない（ナ突撃後に集合してから）']]},
-   brd:{tag:'下地5曲',do:[['下地5曲だけ歌う（本歌はスリプルII直後に上書き）'],['ナイトへのダージュはしない（2体目護衛のヘイトが取りにくくなった例）','P']]},
-   bst:{tag:'K.インスティンクト',do:[['K.インスティンクト'],['対象はプラントイド','P']]}},
-  ng:[['コルセアは2個目のロールをここで振らない'],['詩人はここで本歌を歌わない（下地のみ）']],links:[]},
- {id:'p1',hp:'開幕',label:'ナが釣る',title:'ナイトが釣りに向かう',trigger:'全員の強化が終わったら',adds:0,
-  all:[['ナイト以外は本体に触らない／ナの突撃後に集合'],['Arebatiは最大HPの75%で出現。釣るだけでは護衛は出ない'],['2戦目は時間がギリギリになりやすい。1戦目の削り量が鍵','P']],
-  jobs:{pld:{tag:'釣り',do:[['センチネル＋ランパート＋フィールティ'],['Arebatiに絡まれる形で釣る']]},
-   dnc:{tag:'集合',do:[['ナ突撃後に集合']]},rdm:{tag:'集合',do:[['ナ突撃後に集合。初撃の準備']]},
-   cor:{tag:'集合',do:[['ナ突撃後、全員が集合してから2個目のロール（呪歌完成直前に クルケ→サムライロール）'],['サムライの出目6は許容']]},
-   brd:{tag:'集合',do:[['ナ突撃後に集合。スリプルII直後の本歌に備える']]},bst:{tag:'集合',do:[['ナ突撃後に集合']]}},
-  ng:[['赤の初撃より前に誰かがダメージを入れると護衛が早く出る（1ダメージで出現）']],links:[['pld','boss','hate']]},
- {id:'p2',hp:'75%',label:'初撃・護衛1',title:'75%：赤が初撃 → 護衛1体目＋八重霞',trigger:'ナイトが釣って位置についたら',adds:1,yae:true,
-  all:[['八重霞（45秒）：本体へWSしない'],['ナが護衛のタゲを取るまで手を出さない']],
-  jobs:{pld:{tag:'護衛タゲ',do:[['護衛pop直後は1〜2秒置いてから詠唱（pop直後は受け付けずキャンセルされる）','K'],['護衛にフラッシュ＋シールドバッシュでタゲ確保'],['開幕は本気で護衛のタゲを取る（甘いと詩人に持っていかれる）','P']]},
-   dnc:{tag:'待機',do:[['ボックスステップの準備（次の局面で本体へ）']]},
-   rdm:{tag:'スリプルII',do:[['本体に一撃 → 護衛1体目が出現'],['開幕はマンダウ以外の短剣で殴る（マンダウの追加効果：毒）','P'],['スタイミー＋スリプルIIで本体を寝かせる']]},
-   cor:{tag:'サムライ',do:[['呪歌完成直前に クルケ→サムライロール']]},
-   brd:{tag:'本歌',do:[['スリプルIIで寝た直後に本歌で上書き（メヌ3・4・5／栄典／アリア／バラード2＋3）']]},
-   bst:{tag:'待機',do:[['ペットを本体へ向かわせる準備（キッスは次局面以降リキャスト毎）','X']]}},
-  ng:[['八重霞中に本体へWSしない'],['本体を起こさない（寝かせ中）'],['護衛pop直後に慌てて詠唱 → キャンセルされ再詠唱まで数秒遅れ、護衛が盾以外へ突進して瞬殺','K']],links:[['rdm','boss','sleep'],['pld','add1','hate']]},
- {id:'p3',hp:'75%',label:'弱体→開始',title:'弱体を入れて攻撃開始',trigger:'本体が寝て、ナが護衛を固定したら',adds:1,
-  all:[['サイレス・パライズIIの2種 → ディアIIIが入ったらアタッカー全員で開始']],
-  jobs:{pld:{tag:'護衛固定',do:[['護衛のタゲ維持'],['戦闘直後のマジェスティケアルは本体のタゲを取る。範囲ケアルの開始タイミングを見極める','P']]},
-   dnc:{tag:'ボックス',do:[['本体にボックスステップを完成させる（10段階を維持）']]},
-   rdm:{tag:'サイレス',do:[['連続魔＋サボトゥール → サイレス、パライズII'],['必ずサイレスから完了させる（4〜5回連打してからパライズII）','P'],['2種完了後ディアIII'],['サイレスが入ったら右のサイレスタイマー開始']]},
-   cor:{tag:'ショット',do:[['ライトショット（ディアIII）／アイスショット（パライズII）']]},
-   brd:{tag:'エレジー',do:[['本体にエレジー（戦闘終了まで持続）'],['開幕はナイトル＋エレジー','P']]},
-   bst:{tag:'キッス',do:[['TP吸収キッスをリキャストごとに']]}},
-  ng:[['弱体2種＋ディアIIIの前に攻撃を始めない']],links:[['pld','add1','hate'],['rdm','boss','debuff'],['dnc','boss','debuff'],['brd','boss','debuff'],['cor','boss','debuff'],['pet','boss','kiss']]},
- {id:'p4',hp:'75→40%',label:'中盤ループ',title:'中盤：護衛でTP → WSは本体',trigger:'攻撃開始〜40%まで',adds:1,
-  all:[['アタッカーは護衛を殴ってTP、WSは本体だけ'],['WSはサムライ出目の閾値まで待つ（与TPで特殊技を誘発させない）'],['40%到達は残り時間9分30秒前後が必須'],['本体の通常攻撃で物理防御ダウン-25% → パナケイアで治す','P']],
-  jobs:{pld:{tag:'護衛＋回復',do:[['護衛のタゲ保持、範囲ケアル等で回復'],['本体のヘイト2位は意識しない'],['アタッカーのHPが減ってもすぐ回復しない'],['ヘイトは取りすぎず、2体目pop時に一気に上げる方針が安定'],['レッドロータス等で累積同一技耐性対策に参加']]},
-   dnc:{tag:'ルドラ',do:[['護衛を殴ってTP → 本体にルドラストーム'],['C.フラリッシュ後の2回目WS狙いの時のみTP1000即撃ち可'],['ボックスステップ10段階を維持']]},
-   rdm:{tag:'マーシー',do:[['護衛を殴ってTP → 本体にマーシーストローク'],['サイレス（約6分20秒）が切れる前にアドルII'],['サイレス再付与はサボトゥール併用を優先。パライズII（約7分37秒）は単独でOK'],['2回目のサイレスは1回目の半分程度にレジストされた例あり。タイマーより早めに確認','P']]},
-   cor:{tag:'ラスト/デト',do:[['ラストスタンド・デトネーター（デトは攻撃力2倍補正）'],['八重霞中も遠隔は継続OK']]},
-   brd:{tag:'モーダント',do:[['他のWSと同じタイミングでモーダントライム'],['持ち込みインデが切れたら ピアニッシモ＋スケルツォ で踊り子のアリアを上書き（ブリザドV即死対策）']]},
-   bst:{tag:'キッス',do:[['TP吸収キッスをリキャストごと（1秒も遅らせない）'],['通常時の吸収間隔は約32秒（30〜36秒）','M'],['キッスが遅れるWSは厳禁']]}},
-  ng:[['護衛にWSしない'],['TP閾値前にWSしない'],['獣のキッス遅延']],links:[['pld','add1','hate'],['dnc','add1','melee'],['rdm','add1','melee'],['brd','add1','melee'],['cor','boss','ws'],['dnc','boss','ws'],['rdm','boss','ws'],['brd','boss','ws'],['pet','boss','kiss']]},
- {id:'p5',hp:'40%',label:'護衛2・霞',title:'40%：護衛2体目＋八重霞',trigger:'本体40%未満（目標：残り9分30秒前後）',adds:2,yae:true,
-  all:[['八重霞（45秒）：本体へWSしない'],['コルセアの遠隔・ペットのキッスは継続OK'],['赤・コ・詩は2体目の護衛を殴らない（オートアタックのヘイトでナからタゲを奪う恐れ）','P']],
-  jobs:{pld:{tag:'インビン',do:[['インターヴィーン → インビンシブル の順でヘイト確保'],['取り切れなければフラッシュ＋シールドバッシュ追加'],['火力が高いPTではランパートまで使ってようやく取れた例。強めすぎると本体のタゲを取る危険もある','K']]},
-   dnc:{tag:'WS停止',do:[['1体目の護衛を殴ってTP。本体WSは霞明けまで止める']]},
-   rdm:{tag:'WS停止',do:[['本体WSは霞明けまで止める。弱体の残り時間を確認'],['2体目の護衛は殴らない','P']]},
-   cor:{tag:'遠隔継続',do:[['遠隔攻撃は継続OK（八重霞の対象外）'],['2体目の護衛は殴らない','P'],['八重霞中にラストスタンド以外の遠隔WSを連打して同一技耐性をリセットした例','P']]},
-   brd:{tag:'WS停止',do:[['本体WSは霞明けまで止める'],['2体目の護衛は殴らない','P']]},
-   bst:{tag:'キッス',do:[['キッスはリキャストごとに継続（八重霞の対象外）']]}},
-  ng:[['八重霞中に本体へWS'],['ナ以外が2体目のタゲを取る'],['赤・コ・詩が2体目の護衛を殴る','P']],links:[['pld','add2','hate'],['pld','add1','hate'],['dnc','add1','melee'],['rdm','add1','melee'],['brd','add1','melee'],['cor','boss','ws'],['pet','boss','kiss']]},
- {id:'p6',hp:'25%',label:'バースト',title:'25%：アンリーシュ＋グランドパー → ワイルドカード',trigger:'本体25%',adds:2,
-  all:[['アンリーシュ＋グランドパー → 直後にワイルドカード']],
-  jobs:{pld:{tag:'タゲ維持',do:[['護衛2体のタゲ維持']]},
-   dnc:{tag:'グランドパー',do:[['グランドパー（アンリーシュと同時）']]},
-   rdm:{tag:'マーシー',do:[['本体にマーシーストローク継続']]},
-   cor:{tag:'ワイルド',do:[['アンリーシュ＋グランドパー発動後にワイルドカード']]},
-   brd:{tag:'TP1000即',do:[['アンリーシュ中はモーダントライムをTP1000で即撃ち'],['ワイルドカードが4以下なら メヌ×4＋栄典（＋マルカート）でかけ直し']]},
-   bst:{tag:'アンリーシュ',do:[['アンリーシュ'],['この区間でキッスを8回連打（間隔6〜17秒）した実測例','M']]}},
-  ng:[['ワイルドカードをアンリーシュ＋グランドパーより先に使う']],links:[['pld','add1','hate'],['pld','add2','hate'],['dnc','boss','ws'],['rdm','boss','ws'],['brd','boss','ws'],['cor','boss','ws'],['pet','boss','kiss']]},
- {id:'p7',hp:'20%',label:'終盤',title:'20%：本体が暴れる → 詩人はWS調整',trigger:'本体20%（アンリーシュ終了後）',adds:2,
-  all:[['本体が「暴れる」ようになる'],['サイレスが切れたらサボトゥール併用で再付与']],
-  jobs:{pld:{tag:'タゲ維持',do:[['護衛のタゲ維持']]},
-   dnc:{tag:'ルドラ',do:[['ルドラストーム継続（閾値を守る）']]},
-   rdm:{tag:'サイレス',do:[['サイレス切れ→サボトゥール併用で再付与'],['パライズII切れは単独詠唱で可']]},
-   cor:{tag:'ラスト/デト',do:[['ラストスタンド・デトネーター継続']]},
-   brd:{tag:'ガスト',do:[['攻撃参加から離脱し、ガストスラッシュを連打（同一技耐性対策）'],['記事の更新履歴では「20%以下も攻撃参加・モーダント基本」との記述もあり。LSで事前にどちらか決める','Q'],['与TPが過剰になりそうならガストスラッシュ']]},
-   bst:{tag:'キッス',do:[['キッスをリキャストごとに継続'],['最後の吸収は残0:55の実測例','M']]}},
-  ng:[['詩人の方針（離脱 or 攻撃参加）を当日決めずに始める'],['キッス遅延']],links:[['pld','add1','hate'],['pld','add2','hate'],['dnc','add1','melee'],['rdm','boss','debuff'],['brd','boss','ws'],['cor','boss','ws'],['dnc','boss','ws'],['pet','boss','kiss']]},
- {id:'p8',hp:'0%',label:'討伐',title:'押し切って討伐',trigger:'残りHPを削り切る',adds:2,
-  all:[['役割を最後まで維持'],['物理攻撃力ダウンフィールドが来たら討伐不可（記事）'],['実測：本体の特殊技0回・最大到達TP963（余裕37TP）','M']],
-  jobs:{pld:{tag:'タゲ維持',do:[['護衛のタゲ維持']]},dnc:{tag:'WS',do:[['閾値どおりにWS']]},rdm:{tag:'WS',do:[['閾値どおりにWS']]},cor:{tag:'WS',do:[['閾値どおりにWS']]},brd:{tag:'WS調整',do:[['20%以降の方針どおり']]},bst:{tag:'キッス',do:[['最後までキッス']]}},
-  ng:[],links:[['pld','add1','hate'],['pld','add2','hate'],['dnc','boss','ws'],['rdm','boss','ws'],['cor','boss','ws'],['pet','boss','kiss']]},
-];
-const WS={7:2000,8:2000,9:2000,10:2000,2:2500,11:2500,6:1700};
+const BATTLE='b2';
+const SRC={"A": "記事", "M": "記事の動画解析値", "P": "旧記事Part1/2", "K": "他PT記事", "L": "LS方針", "Q": "要確認", "X": "記載なし"};
+const GIMMICKS=[["Arebatiは最大HPの75%で出現。釣るだけでは護衛は出ず、1ダメージで護衛がpop"], ["HP75%・40%で護衛（ラズ族）pop＋八重霞45秒"], ["特殊技のTPしきい値は1000。TP吸収キッスで完封するのが前提"], ["ダメージが通るのは突属性の近接・遠隔のみ。属性攻撃は無効", "P"], ["エフェクト中は氷ベースの連携（硬化・湾曲・闇）を吸収し、HPを70,000以上回復", "P"], ["強化を消す特殊技が多い", "P"], ["通常攻撃の追加効果に物理防御ダウン-25%（パナケイアで治す）", "P"], ["護衛の攻撃力は非常に高い。盾以外に向くとパーティ崩壊のおそれ", "P"], ["護衛はpop直後しばらく魔法・アビを受け付けない（急いで詠唱するとキャンセルされる）", "K"]];
+const JOBS=[{"id": "pld", "short": "ナ", "name": "ナイト", "role": "盾：護衛のタゲ保持", "prep": [["持ち込みインデ：インデリジェネ"], ["開幕：マジェスティ・プロテスV・シェルIV"]]}, {"id": "dnc", "short": "踊", "name": "踊り子", "role": "盾/アタッカー：ボックス維持・ルドラ", "prep": [["持ち込みインデ：インデバリア"], ["武器：トゥワシュトラ＋グレティナイフRank30"], ["食事：牛丼+1が望ましい"], ["サンバ：剣の舞い5振り＋ヘイストサンバ5振り"]]}, {"id": "rdm", "short": "赤", "name": "赤魔道士", "role": "アタッカー：初撃・寝かせ・弱体", "prep": [["持ち込みインデ：インデデック"], ["武器：マンダウ一択"], ["開幕用にマンダウ以外の短剣も持つ（マンダウは追加効果で毒）", "P"], ["食事：スコッチエッグ+1"], ["サイレス命中用：レジストハック2回以上＋カイロンホーズ"], ["開幕強化は1分以内が目安：ヘイストII・ファランクスII・シェルV・ストライII・ゲインスト・リフレシュIII・ストンスキン・アクアベール"]]}, {"id": "cor", "short": "コ", "name": "コルセア", "role": "弱体/アタッカー：ロール・遠隔・ワイルドカード", "prep": [["持ち込みインデ：インデフューリー"], ["武器：ロスタム Type:B／遠隔：フォーマルハウト"], ["食事：スコッチエッグ+1"], ["ロール順を確認：階段上 クルケ→ランダムディール→カオス／呪歌完成直前 クルケ→サムライ"]]}, {"id": "brd", "short": "吟", "name": "吟遊詩人", "role": "支援/アタッカー：呪歌・エレジー・WS調整", "prep": [["持ち込みインデ：インデフェンド（詩人か獣のどちらか）"], ["武器：カルンウェナン"], ["BF突入前にTP3000（アフターマスLv3をすぐ付けられるように）", "P"], ["食事：スコッチエッグ+1"], ["本歌：メヌ3・4・5／栄典／アリア／バラード2＋3"]]}, {"id": "bst", "short": "獣", "name": "獣使い", "role": "支援：ペットのTP吸収キッスで特殊技を封じる", "prep": [["持ち込みインデ：インデフェンド（詩人か獣のどちらか）"], ["汁ペット（TP吸収キッス）の準備"], ["ペットの被魔法ダメージカット装備（サイレス切れのブリザガ対策）", "P"], ["開幕：K.インスティンクト"], ["獣本体は攻撃に参加しない"]]}];
+const PHASES=[{"id": "p0", "hp": "突入後", "label": "階段上で強化", "title": "階段上で事前強化", "trigger": "突入して階段上に集合したら", "adds": 0, "all": [["持ち込みインデを確認"], ["戦闘の流れ（順番）を厳守。開幕のヘイト管理は難しい"]], "jobs": {"pld": {"tag": "マジェスティ", "do": [["マジェスティ、プロテスV、シェルIV"]]}, "dnc": {"tag": "待機", "do": [["階段上での個別行動は記事に記載なし", "X"]]}, "rdm": {"tag": "強化", "do": [["ヘイストII・ファランクスII・シェルV・ストライII・ゲインスト・リフレシュIII・ストンスキン・アクアベール"], ["所要は1分以内が目安"]]}, "cor": {"tag": "カオス", "do": [["クルケ → ランダムディール（対象：クルケッドカード）→ カオスロール"], ["カオスの出目は4か7以上。スネークアイを使ってでも。8（アンラッキー）は避ける"], ["2個目のロールはまだ振らない（ナ突撃後に集合してから）"]]}, "brd": {"tag": "下地5曲", "do": [["下地5曲だけ歌う（本歌はスリプルII直後に上書き）"], ["ナイトへのダージュはしない（2体目護衛のヘイトが取りにくくなった例）", "P"]]}, "bst": {"tag": "K.インスティンクト", "do": [["K.インスティンクト"], ["対象はプラントイド", "P"]]}}, "ng": [["コルセアは2個目のロールをここで振らない"], ["詩人はここで本歌を歌わない（下地のみ）"]], "links": []}, {"id": "p1", "hp": "開幕", "label": "ナが釣る", "title": "ナイトが釣りに向かう", "trigger": "全員の強化が終わったら", "adds": 0, "all": [["ナイト以外は本体に触らない／ナの突撃後に集合"], ["Arebatiは最大HPの75%で出現。釣るだけでは護衛は出ない"], ["2戦目は時間がギリギリになりやすい。1戦目の削り量が鍵", "P"]], "jobs": {"pld": {"tag": "釣り", "do": [["センチネル＋ランパート＋フィールティ"], ["Arebatiに絡まれる形で釣る"]]}, "dnc": {"tag": "集合", "do": [["ナ突撃後に集合"]]}, "rdm": {"tag": "集合", "do": [["ナ突撃後に集合。初撃の準備"]]}, "cor": {"tag": "集合", "do": [["ナ突撃後、全員が集合してから2個目のロール（呪歌完成直前に クルケ→サムライロール）"], ["サムライの出目6は許容"]]}, "brd": {"tag": "集合", "do": [["ナ突撃後に集合。スリプルII直後の本歌に備える"]]}, "bst": {"tag": "集合", "do": [["ナ突撃後に集合"]]}}, "ng": [["赤の初撃より前に誰かがダメージを入れると護衛が早く出る（1ダメージで出現）"]], "links": [["pld", "boss", "hate"]]}, {"id": "p2", "hp": "75%", "label": "初撃・護衛1", "title": "75%：赤が初撃 → 護衛1体目＋八重霞", "trigger": "ナイトが釣って位置についたら", "adds": 1, "yae": true, "all": [["八重霞（45秒）：本体へWSしない"], ["ナが護衛のタゲを取るまで手を出さない"]], "jobs": {"pld": {"tag": "護衛タゲ", "do": [["護衛pop直後は1〜2秒置いてから詠唱（pop直後は受け付けずキャンセルされる）", "K"], ["護衛にフラッシュ＋シールドバッシュでタゲ確保"], ["開幕は本気で護衛のタゲを取る（甘いと詩人に持っていかれる）", "P"]]}, "dnc": {"tag": "待機", "do": [["ボックスステップの準備（次の局面で本体へ）"]]}, "rdm": {"tag": "スリプルII", "do": [["本体に一撃 → 護衛1体目が出現"], ["開幕はマンダウ以外の短剣で殴る（マンダウの追加効果：毒）", "P"], ["スタイミー＋スリプルIIで本体を寝かせる"]]}, "cor": {"tag": "サムライ", "do": [["呪歌完成直前に クルケ→サムライロール"]]}, "brd": {"tag": "本歌", "do": [["スリプルIIで寝た直後に本歌で上書き（メヌ3・4・5／栄典／アリア／バラード2＋3）"]]}, "bst": {"tag": "待機", "do": [["ペットを本体へ向かわせる準備（キッスは次局面以降リキャスト毎）", "X"]]}}, "ng": [["八重霞中に本体へWSしない"], ["本体を起こさない（寝かせ中）"], ["護衛pop直後に慌てて詠唱 → キャンセルされ再詠唱まで数秒遅れ、護衛が盾以外へ突進して瞬殺", "K"]], "links": [["rdm", "boss", "sleep"], ["pld", "add1", "hate"]]}, {"id": "p3", "hp": "75%", "label": "弱体→開始", "title": "弱体を入れて攻撃開始", "trigger": "本体が寝て、ナが護衛を固定したら", "adds": 1, "all": [["サイレス・パライズIIの2種 → ディアIIIが入ったらアタッカー全員で開始"]], "jobs": {"pld": {"tag": "護衛固定", "do": [["護衛のタゲ維持"], ["戦闘直後のマジェスティケアルは本体のタゲを取る。範囲ケアルの開始タイミングを見極める", "P"]]}, "dnc": {"tag": "ボックス", "do": [["本体にボックスステップを完成させる（10段階を維持）"]]}, "rdm": {"tag": "サイレス", "do": [["連続魔＋サボトゥール → サイレス、パライズII"], ["必ずサイレスから完了させる（4〜5回連打してからパライズII）", "P"], ["2種完了後ディアIII"], ["サイレスが入ったら右のサイレスタイマー開始"]]}, "cor": {"tag": "ショット", "do": [["ライトショット（ディアIII）／アイスショット（パライズII）"]]}, "brd": {"tag": "エレジー", "do": [["本体にエレジー（戦闘終了まで持続）"], ["開幕はナイトル＋エレジー", "P"]]}, "bst": {"tag": "キッス", "do": [["TP吸収キッスをリキャストごとに"]]}}, "ng": [["弱体2種＋ディアIIIの前に攻撃を始めない"]], "links": [["pld", "add1", "hate"], ["rdm", "boss", "debuff"], ["dnc", "boss", "debuff"], ["brd", "boss", "debuff"], ["cor", "boss", "debuff"], ["pet", "boss", "kiss"]]}, {"id": "p4", "hp": "75→40%", "label": "中盤ループ", "title": "中盤：護衛でTP → WSは本体", "trigger": "攻撃開始〜40%まで", "adds": 1, "all": [["アタッカーは護衛を殴ってTP、WSは本体だけ"], ["WSはサムライ出目の閾値まで待つ（与TPで特殊技を誘発させない）"], ["40%到達は残り時間9分30秒前後が必須"], ["本体の通常攻撃で物理防御ダウン-25% → パナケイアで治す", "P"]], "jobs": {"pld": {"tag": "護衛＋回復", "do": [["護衛のタゲ保持、範囲ケアル等で回復"], ["本体のヘイト2位は意識しない"], ["アタッカーのHPが減ってもすぐ回復しない"], ["ヘイトは取りすぎず、2体目pop時に一気に上げる方針が安定"], ["レッドロータス等で累積同一技耐性対策に参加"]]}, "dnc": {"tag": "ルドラ", "do": [["護衛を殴ってTP → 本体にルドラストーム"], ["C.フラリッシュ後の2回目WS狙いの時のみTP1000即撃ち可"], ["ボックスステップ10段階を維持"]]}, "rdm": {"tag": "マーシー", "do": [["護衛を殴ってTP → 本体にマーシーストローク"], ["サイレス（約6分20秒）が切れる前にアドルII"], ["サイレス再付与はサボトゥール併用を優先。パライズII（約7分37秒）は単独でOK"], ["2回目のサイレスは1回目の半分程度にレジストされた例あり。タイマーより早めに確認", "P"]]}, "cor": {"tag": "ラスト/デト", "do": [["ラストスタンド・デトネーター（デトは攻撃力2倍補正）"], ["八重霞中も遠隔は継続OK"]]}, "brd": {"tag": "モーダント", "do": [["他のWSと同じタイミングでモーダントライム"], ["持ち込みインデが切れたら ピアニッシモ＋スケルツォ で踊り子のアリアを上書き（ブリザドV即死対策）"]]}, "bst": {"tag": "キッス", "do": [["TP吸収キッスをリキャストごと（1秒も遅らせない）"], ["通常時の吸収間隔は約32秒（30〜36秒）", "M"], ["キッスが遅れるWSは厳禁"]]}}, "ng": [["護衛にWSしない"], ["TP閾値前にWSしない"], ["獣のキッス遅延"]], "links": [["pld", "add1", "hate"], ["dnc", "add1", "melee"], ["rdm", "add1", "melee"], ["brd", "add1", "melee"], ["cor", "boss", "ws"], ["dnc", "boss", "ws"], ["rdm", "boss", "ws"], ["brd", "boss", "ws"], ["pet", "boss", "kiss"]]}, {"id": "p5", "hp": "40%", "label": "護衛2・霞", "title": "40%：護衛2体目＋八重霞", "trigger": "本体40%未満（目標：残り9分30秒前後）", "adds": 2, "yae": true, "all": [["八重霞（45秒）：本体へWSしない"], ["コルセアの遠隔・ペットのキッスは継続OK"], ["赤・コ・詩は2体目の護衛を殴らない（オートアタックのヘイトでナからタゲを奪う恐れ）", "P"]], "jobs": {"pld": {"tag": "インビン", "do": [["インターヴィーン → インビンシブル の順でヘイト確保"], ["取り切れなければフラッシュ＋シールドバッシュ追加"], ["火力が高いPTではランパートまで使ってようやく取れた例。強めすぎると本体のタゲを取る危険もある", "K"]]}, "dnc": {"tag": "WS停止", "do": [["1体目の護衛を殴ってTP。本体WSは霞明けまで止める"]]}, "rdm": {"tag": "WS停止", "do": [["本体WSは霞明けまで止める。弱体の残り時間を確認"], ["2体目の護衛は殴らない", "P"]]}, "cor": {"tag": "遠隔継続", "do": [["遠隔攻撃は継続OK（八重霞の対象外）"], ["2体目の護衛は殴らない", "P"], ["八重霞中にラストスタンド以外の遠隔WSを連打して同一技耐性をリセットした例", "P"]]}, "brd": {"tag": "WS停止", "do": [["本体WSは霞明けまで止める"], ["2体目の護衛は殴らない", "P"]]}, "bst": {"tag": "キッス", "do": [["キッスはリキャストごとに継続（八重霞の対象外）"]]}}, "ng": [["八重霞中に本体へWS"], ["ナ以外が2体目のタゲを取る"], ["赤・コ・詩が2体目の護衛を殴る", "P"]], "links": [["pld", "add2", "hate"], ["pld", "add1", "hate"], ["dnc", "add1", "melee"], ["rdm", "add1", "melee"], ["brd", "add1", "melee"], ["cor", "boss", "ws"], ["pet", "boss", "kiss"]]}, {"id": "p6", "hp": "25%", "label": "バースト", "title": "25%：アンリーシュ＋グランドパー → ワイルドカード", "trigger": "本体25%", "adds": 2, "all": [["アンリーシュ＋グランドパー → 直後にワイルドカード"]], "jobs": {"pld": {"tag": "タゲ維持", "do": [["護衛2体のタゲ維持"]]}, "dnc": {"tag": "グランドパー", "do": [["グランドパー（アンリーシュと同時）"]]}, "rdm": {"tag": "マーシー", "do": [["本体にマーシーストローク継続"]]}, "cor": {"tag": "ワイルド", "do": [["アンリーシュ＋グランドパー発動後にワイルドカード"]]}, "brd": {"tag": "TP1000即", "do": [["アンリーシュ中はモーダントライムをTP1000で即撃ち"], ["ワイルドカードが4以下なら メヌ×4＋栄典（＋マルカート）でかけ直し"]]}, "bst": {"tag": "アンリーシュ", "do": [["アンリーシュ"], ["この区間でキッスを8回連打（間隔6〜17秒）した実測例", "M"]]}}, "ng": [["ワイルドカードをアンリーシュ＋グランドパーより先に使う"]], "links": [["pld", "add1", "hate"], ["pld", "add2", "hate"], ["dnc", "boss", "ws"], ["rdm", "boss", "ws"], ["brd", "boss", "ws"], ["cor", "boss", "ws"], ["pet", "boss", "kiss"]]}, {"id": "p7", "hp": "20%", "label": "終盤", "title": "20%：本体が暴れる → 詩人はWS調整", "trigger": "本体20%（アンリーシュ終了後）", "adds": 2, "all": [["本体が「暴れる」ようになる"], ["サイレスが切れたらサボトゥール併用で再付与"]], "jobs": {"pld": {"tag": "タゲ維持", "do": [["護衛のタゲ維持"]]}, "dnc": {"tag": "ルドラ", "do": [["ルドラストーム継続（閾値を守る）"]]}, "rdm": {"tag": "サイレス", "do": [["サイレス切れ→サボトゥール併用で再付与"], ["パライズII切れは単独詠唱で可"]]}, "cor": {"tag": "ラスト/デト", "do": [["ラストスタンド・デトネーター継続"]]}, "brd": {"tag": "ガスト", "do": [["攻撃参加から離脱し、ガストスラッシュを連打（同一技耐性対策）"], ["記事の更新履歴では「20%以下も攻撃参加・モーダント基本」との記述もあり。LSで事前にどちらか決める", "Q"], ["与TPが過剰になりそうならガストスラッシュ"]]}, "bst": {"tag": "キッス", "do": [["キッスをリキャストごとに継続"], ["最後の吸収は残0:55の実測例", "M"]]}}, "ng": [["詩人の方針（離脱 or 攻撃参加）を当日決めずに始める"], ["キッス遅延"]], "links": [["pld", "add1", "hate"], ["pld", "add2", "hate"], ["dnc", "add1", "melee"], ["rdm", "boss", "debuff"], ["brd", "boss", "ws"], ["cor", "boss", "ws"], ["dnc", "boss", "ws"], ["pet", "boss", "kiss"]]}, {"id": "p8", "hp": "0%", "label": "討伐", "title": "押し切って討伐", "trigger": "残りHPを削り切る", "adds": 2, "all": [["役割を最後まで維持"], ["物理攻撃力ダウンフィールドが来たら討伐不可（記事）"], ["実測：本体の特殊技0回・最大到達TP963（余裕37TP）", "M"]], "jobs": {"pld": {"tag": "タゲ維持", "do": [["護衛のタゲ維持"]]}, "dnc": {"tag": "WS", "do": [["閾値どおりにWS"]]}, "rdm": {"tag": "WS", "do": [["閾値どおりにWS"]]}, "cor": {"tag": "WS", "do": [["閾値どおりにWS"]]}, "brd": {"tag": "WS調整", "do": [["20%以降の方針どおり"]]}, "bst": {"tag": "キッス", "do": [["最後までキッス"]]}}, "ng": [], "links": [["pld", "add1", "hate"], ["pld", "add2", "hate"], ["dnc", "boss", "ws"], ["rdm", "boss", "ws"], ["cor", "boss", "ws"], ["pet", "boss", "kiss"]]}];
+const WS={"2": 2500, "6": 1700, "7": 2000, "8": 2000, "9": 2000, "10": 2000, "11": 2500};
 
 // ---- 状態
 let job=store.get('arebati.job','all');if(job!=='all'&&!JOBS.some(j=>j.id===job))job='all';
@@ -347,7 +271,7 @@ const cssVar=n=>getComputedStyle(document.documentElement).getPropertyValue('--'
 const jobColor=id=>cssVar(id);
 const el=(tag,attrs={},...kids)=>{const n=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='class')n.className=v;else if(k==='style')n.style.cssText=v;else if(k.startsWith('on'))n.addEventListener(k.slice(2),v);else n.setAttribute(k,v)}for(const c of kids)if(c!=null)n.append(c);return n};
 const srcTag=s=>el('span',{class:'src s-'+s},SRC[s]);
-const actList=(items,cls='acts')=>{if(!items||!items.length)return el('p',{class:'none'},'特になし');const ul=el('ul',{class:cls});for(const[t,s='A']of items){const li=el('li');li.append(el('span',{},t,s!=='A'?srcTag(s):null));ul.append(li)}return ul};
+const actList=(items,cls='acts',ctx)=>{if(!items||!items.length)return el('p',{class:'none'},'特になし');const ul=el('ul',{class:cls});for(const[i,[t,s='A']]of items.entries()){const li=el('li');li.append(el('span',{},t,s!=='A'?srcTag(s):null,ctx?commentBtn({id:ctx.id+'.'+i,where:ctx.where,text:t,src:s}):null));ul.append(li)}return ul};
 
 // ---- ジョブバー
 function buildJobBar(){const bar=$('jobbar');const opts=[{id:'all',short:'全',name:'全体を見る'},...JOBS];
@@ -365,14 +289,14 @@ function renderPhase(){const p=PHASES[pi],v=$('phaseView');v.replaceChildren();
  v.append(head,el('div',{class:'trigger'},el('span',{},'合図'),p.trigger));
  if(p.yae)v.append(el('div',{class:'yaebox'},el('strong',{},'⚠ 八重霞 45秒：本体へWS禁止（遠隔・キッスはOK）'),el('button',{class:'btn main',onclick:()=>startTimer('yae')},'45秒タイマー開始')));
  if(job==='all'){
-  v.append(el('div',{class:'allitems'},el('h3',{},'全員'),actList(p.all,'acts small')));
+  v.append(el('div',{class:'allitems'},el('h3',{},'全員'),actList(p.all,'acts small',{id:BATTLE+'.'+p.id+'.all',where:phaseWhere(p,'全員')})));
   const g=el('div',{class:'allgrid'});for(const j of JOBS){const a=p.jobs[j.id];g.append(el('button',{class:'jcard',style:'--c:var(--'+j.id+')',onclick:()=>setJob(j.id),title:j.name+'の画面にする'},el('h4',{},j.name,el('small',{},'タップで拡大')),actList(a.do,'acts small')))}v.append(g);
  }else{const j=JOBS.find(x=>x.id===job),a=p.jobs[job];
-  v.append(el('div',{class:'mine',style:'--c:var(--'+job+')'},el('h3',{},el('i'),'あなた（'+j.name+'）がやること'),actList(a.do)));
-  v.append(el('div',{class:'allitems'},el('h3',{},'全員共通'),actList(p.all,'acts small')));
+  v.append(el('div',{class:'mine',style:'--c:var(--'+job+')'},el('h3',{},el('i'),'あなた（'+j.name+'）がやること'),actList(a.do,'acts',{id:BATTLE+'.'+p.id+'.'+job,where:phaseWhere(p,j.name)})));
+  v.append(el('div',{class:'allitems'},el('h3',{},'全員共通'),actList(p.all,'acts small',{id:BATTLE+'.'+p.id+'.all',where:phaseWhere(p,'全員')})));
   const d=el('details',{class:'others'},el('summary',{},'他のメンバーの動き'));const g=el('div',{class:'allgrid'});
   for(const o of JOBS){if(o.id===job)continue;g.append(el('button',{class:'jcard',style:'--c:var(--'+o.id+')',onclick:()=>setJob(o.id)},el('h4',{},o.name),actList(p.jobs[o.id].do,'acts small')))}d.append(g);v.append(d)}
- if(p.ng.length)v.append(el('div',{class:'alert'},el('h3',{},'✕ この局面でやってはいけないこと'),actList(p.ng,'')));
+ if(p.ng.length)v.append(el('div',{class:'alert'},el('h3',{},'✕ この局面でやってはいけないこと'),actList(p.ng,'',{id:BATTLE+'.'+p.id+'.ng',where:phaseWhere(p,'NG')})));
 }
 
 // ---- 関係図
@@ -440,11 +364,11 @@ let checks=store.get('arebati.checks',{});
 function renderPrep(){const box=$('prepBox');box.replaceChildren();
  for(const j of JOBS){if(job!=='all'&&j.id!==job)continue;const done=j.prep.filter((_,i)=>checks[j.id+i]).length;
   const c=el('div',{class:'prep',style:'--c:var(--'+j.id+')'},el('h3',{},j.name+'　',el('span',{class:'prog'},done+' / '+j.prep.length)),el('div',{style:'font-size:11px;color:var(--muted);margin-bottom:4px'},j.role));
-  j.prep.forEach(([t],i)=>{const k=j.id+i;const cb=el('input',{type:'checkbox'});cb.checked=!!checks[k];cb.addEventListener('change',()=>{checks[k]=cb.checked;store.set('arebati.checks',checks);renderPrep()});c.append(el('label',{class:cb.checked?'chk':''},cb,el('span',{},t)))});box.append(c)}}
+  j.prep.forEach(([t,s='A'],i)=>{const k=j.id+i;const cb=el('input',{type:'checkbox'});cb.checked=!!checks[k];cb.addEventListener('change',()=>{checks[k]=cb.checked;store.set('arebati.checks',checks);renderPrep()});c.append(el('div',{class:'preprow'},el('label',{class:cb.checked?'chk':''},cb,el('span',{},t,s!=='A'?srcTag(s):null)),commentBtn({id:BATTLE+'.prep.'+j.id+'.'+i,where:'事前チェック＞'+j.name,text:t,src:s})))});box.append(c)}}
 $('prepReset').onclick=()=>{if(confirm('この端末のチェックを全解除しますか？')){checks={};store.set('arebati.checks',checks);renderPrep()}};
 
 // ---- タブ
-function showTab(t){tab=t;for(const b of document.querySelectorAll('.tab'))b.setAttribute('aria-selected',String(b.dataset.tab===t));for(const k of['battle','matrix','prep','video'])$('tab-'+k).classList.toggle('hidden',k!==t);if(t==='matrix')renderMatrix();if(t==='prep')renderPrep()}
+function showTab(t){tab=t;for(const b of document.querySelectorAll('.tab'))b.setAttribute('aria-selected',String(b.dataset.tab===t));for(const k of['battle','matrix','prep','video','gaps'])$('tab-'+k).classList.toggle('hidden',k!==t);if(t==='matrix')renderMatrix();if(t==='prep')renderPrep();if(t==='gaps')renderGaps()}
 for(const b of document.querySelectorAll('.tab'))b.onclick=()=>showTab(b.dataset.tab);
 $('printBtn').onclick=()=>window.print();
 
@@ -484,12 +408,73 @@ function videoJumpToPhase(){if(!pReady||!follow)return;const s=bms[vsrc][PHASES[
 setInterval(()=>{if(!pReady)return;let t;try{t=player.getCurrentTime()}catch(e){return}$('vclock').textContent=fmt(t);if(!follow)return;
  const l=sorted().filter(x=>x.s<=t+.05);if(!l.length)return;const i=l[l.length-1].i;if(i!==lastFollow){lastFollow=i;if(i!==pi){pi=i;store.set('arebati.phase',pi);renderBattle()}}},300);
 
+// ---- 意見（LSメンバーが書いて Discord に貼る。ガイドへの反映は管理者のみ）
+const BUILD=(document.querySelector('meta[name=guide-build]')||{}).content||'dev';
+const BATTLE_LABEL=BATTLE==='b1'?'1戦目':'2戦目';
+const KINDS=['訂正','追加情報','回答','質問'];
+let cmtCtx=null;
+function phaseWhere(p,who){return '局面'+(PHASES.indexOf(p)+1)+'「'+p.title+'」＞'+who}
+function commentBtn(ctx){return el('button',{type:'button',class:'cmt',title:'この項目に意見を書く','aria-label':'この項目に意見を書く',onclick:e=>{e.preventDefault();e.stopPropagation();openComment(ctx)}},'💬')}
+function toast(t){const n=$('toast');n.textContent=t;n.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>n.classList.remove('show'),3200)}
+function initComments(){
+ const kind=el('select',{id:'cmtKind'});for(const k of KINDS)kind.append(el('option',{value:k},k));
+ const field=(label,ctl)=>el('label',{class:'fld'},el('span',{},label),ctl);
+ const dlg=el('dialog',{id:'cmtDlg',class:'dlg','aria-labelledby':'cmtTitle'},
+  el('h2',{id:'cmtTitle'},'意見を書く'),
+  el('p',{class:'dlgnote'},'「コピー」した文をLSのDiscordに貼ってください。ガイドへの反映は管理者が確認してから行います。'),
+  el('dl',{class:'cmtmeta'},el('dt',{},'場所'),el('dd',{id:'cmtWhere'}),el('dt',{},'今の記載'),el('dd',{id:'cmtCurrent'}),el('dt',{},'ID'),el('dd',{id:'cmtId'})),
+  field('種類',kind),
+  field('内容（必須）',el('textarea',{id:'cmtBody',rows:'4',placeholder:'例：護衛が沸いたら魔導剣士がフラッシュで取る'})),
+  field('根拠',el('input',{id:'cmtBasis',placeholder:'例：10/30の実戦／動画A 12:34／記事URL'})),
+  field('名前',el('input',{id:'cmtName',placeholder:'キャラ名など（この端末に保存）'})),
+  el('textarea',{id:'cmtOut',class:'hidden',rows:'7',readonly:'','aria-label':'コピー用の文'}),
+  el('div',{class:'dlgbtns'},el('button',{type:'button',class:'btn',onclick:()=>$('cmtDlg').close()},'閉じる'),el('button',{type:'button',class:'btn main',onclick:copyComment},'コピー')));
+ document.body.append(dlg,el('div',{id:'toast',role:'status'}));
+ $('generalComment').onclick=()=>openComment({id:BATTLE+'.general',where:'ガイド全体',text:'',src:'A'});
+}
+function openComment(ctx){cmtCtx=ctx;
+ $('cmtWhere').textContent=BATTLE_LABEL+' ＞ '+ctx.where;
+ $('cmtCurrent').textContent=ctx.text?ctx.text+(ctx.src&&ctx.src!=='A'?'［'+SRC[ctx.src]+'］':''):'（特定の項目なし）';
+ $('cmtId').textContent=ctx.id;
+ $('cmtKind').value=ctx.src==='Q'||ctx.src==='X'?'回答':ctx.text?'訂正':'追加情報';
+ $('cmtBody').value='';$('cmtBasis').value='';$('cmtName').value=store.get('guide.name','');
+ $('cmtOut').classList.add('hidden');
+ $('cmtDlg').showModal();$('cmtBody').focus()}
+function commentText(){const c=cmtCtx;return ['【Arebatiガイド 意見】',
+ 'ID: '+c.id,
+ '場所: '+BATTLE_LABEL+' ＞ '+c.where,
+ '今の記載: '+($('cmtCurrent').textContent),
+ '種類: '+$('cmtKind').value,
+ '内容: '+$('cmtBody').value.trim(),
+ '根拠: '+($('cmtBasis').value.trim()||'（なし）'),
+ '投稿者: '+($('cmtName').value.trim()||'（未記入）'),
+ '版: '+BUILD].join('\n')}
+async function copyComment(){
+ if(!$('cmtBody').value.trim()){$('cmtBody').focus();toast('内容を書いてください');return}
+ store.set('guide.name',$('cmtName').value.trim());
+ const txt=commentText();
+ try{await navigator.clipboard.writeText(txt);$('cmtDlg').close();toast('コピーしました。LSのDiscordに貼ってください')}
+ catch(e){const o=$('cmtOut');o.value=txt;o.classList.remove('hidden');o.focus();o.select();toast('自動でコピーできません。下の文を選んでコピーしてください')}}
+
+// ---- 不足情報タブ：記載なし・要確認の項目を集めて一覧にする
+function renderGaps(){const box=$('gapsBox');box.replaceChildren();const rows=[];
+ const scan=(list,id,where)=>list.forEach(([t,s='A'],i)=>{if(s==='Q'||s==='X')rows.push({id:id+'.'+i,where,text:t,src:s})});
+ scan(GIMMICKS,BATTLE+'.gim','ボス・護衛の仕様');
+ for(const j of JOBS)scan(j.prep,BATTLE+'.prep.'+j.id,'事前チェック＞'+j.name);
+ for(const p of PHASES){scan(p.all,BATTLE+'.'+p.id+'.all',phaseWhere(p,'全員'));
+  for(const j of JOBS)scan(p.jobs[j.id].do,BATTLE+'.'+p.id+'.'+j.id,phaseWhere(p,j.name));
+  scan(p.ng,BATTLE+'.'+p.id+'.ng',phaseWhere(p,'NG'))}
+ $('gapsCount').textContent=rows.length+'件';
+ if(!rows.length){box.append(el('p',{class:'none'},'未確定の項目はありません'));return}
+ for(const r of rows)box.append(el('div',{class:'gap'},el('div',{class:'gw'},r.where),el('div',{class:'gt'},r.text,srcTag(r.src),commentBtn(r))))}
+
+
 // ---- 全体
 function renderBattle(){renderRail();renderPhase();renderMap();if(tab==='matrix')renderMatrix();if(!$('tab-video').classList.contains('hidden'))renderBms();else if(pReady)renderBms()}
 function renderAll(){renderBattle();renderTimers();renderPrep();if(tab==='matrix')renderMatrix()}
 window.addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;if(e.key==='ArrowRight')setPhase(pi+1,true);else if(e.key==='ArrowLeft')setPhase(pi-1,true)});
-$('gimmicks').append(actList(GIMMICKS,'acts small'));
-buildJobBar();buildRail();buildLegend();buildWS();renderAll();renderBms();
+$('gimmicks').append(actList(GIMMICKS,'acts small',{id:BATTLE+'.gim',where:'ボス・護衛の仕様'}));
+initComments();buildJobBar();buildRail();buildLegend();buildWS();renderAll();renderBms();
 })();
 </script>
 </body>

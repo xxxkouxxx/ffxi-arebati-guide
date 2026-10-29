@@ -6,12 +6,15 @@
 
 | ファイル | 内容 |
 |---|---|
+| `arebati_v25_battle1_guide.html` | 1戦目ガイド（単一HTML） |
 | `arebati_v25_battle2_guide.html` | 2戦目ガイド（単一HTML）。ジョブ別の局面行動・NG・関係図・当日タイマー・WS閾値早見表・事前チェック・YouTube局面ブックマーク |
 | `docs/dev_brief.md` | 開発依頼書（ガードレール・Human Gate） |
 
-1戦目ガイドは2戦目版の改修完了後に追加予定。
 
 ## 使い方
+
+公開版: https://xxxkouxxx.github.io/ffxi-arebati-guide/
+
 
 ブラウザでHTMLを開くだけで動作します（外部依存はYouTube IFrame APIのみ）。動画タブを使う場合は `file://` では再生できないことがあるため、HTTPで開いてください。
 

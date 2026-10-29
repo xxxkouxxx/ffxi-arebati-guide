@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arebati V25 2戦目ガイド</title>
+<style>
+:root{color-scheme:dark;--bg:#07101b;--panel:#0f1d2c;--panel2:#13263a;--edge:#284058;--muted:#97aec3;--text:#eaf4ff;--brand:#51d7c7;--warn:#f6be69;--danger:#ff7b86;--ok:#5fe0a8;
+--pld:#78aafc;--dnc:#fa76b5;--rdm:#f46e75;--cor:#f6c16d;--brd:#bd98fb;--bst:#70d8ae;--pet:#74ecd8}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 50% -10%,#14334d 0,#0a1828 45%,#050c16 100%);background-color:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic",Meiryo,system-ui,sans-serif;line-height:1.6}
+button,select,input{font:inherit;color:inherit}button{cursor:pointer}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+a{color:#89e2d9}
+.wrap{max-width:1280px;margin:auto;padding:20px 16px 48px}
+header.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.kicker{font-size:11px;letter-spacing:.2em;color:#77dfd3;font-weight:800}
+h1{margin:4px 0 0;font-size:clamp(20px,3vw,30px);letter-spacing:-.02em}
+.sub{font-size:12px;color:var(--muted);margin:4px 0 0}
+.btn{background:#182b40;border:1px solid #34536e;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;min-height:36px}
+.btn:hover{background:#24405a}.btn.main{background:#48cbbb;color:#06202d;border-color:#6deada}.btn.main:hover{background:#72e3d6}
+.btn.small{padding:5px 9px;min-height:30px;font-size:11px}.btn.danger{border-color:#8a3d48;background:#3a1a22}
+.btn[aria-pressed=true]{background:#21434c;border-color:var(--brand);color:#fff}
+.panel{background:linear-gradient(170deg,#11263a,#0c1928);border:1px solid var(--edge);border-radius:16px;overflow:hidden}
+.ph{padding:12px 16px;border-bottom:1px solid #223a50;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.ph h2{margin:0;font-size:15px}.ph p{margin:2px 0 0;font-size:11px;color:var(--muted)}
+.pb{padding:14px 16px}
+
+/* 鉄則バー */
+.rules{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.rule{border:1px solid #6b3a44;background:linear-gradient(120deg,#3a1922,#1a1a26);border-radius:12px;padding:9px 12px;font-size:12px}
+.rule b{display:block;color:#ffb3ba;font-size:13px}
+/* ジョブ選択 */
+.jobbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.jobbar .lbl{font-size:12px;color:var(--muted);margin-right:4px;font-weight:700}
+.jb{border:1px solid #365168;border-radius:999px;background:#13283a;padding:7px 14px;font-size:13px;font-weight:800;display:flex;align-items:center;gap:7px}
+.jb i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.jb[aria-pressed=true]{background:#21434c;border-color:var(--c,var(--brand));box-shadow:0 0 0 2px color-mix(in srgb,var(--c,var(--brand)) 40%,transparent)}
+/* タブ */
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tab{border:0;border-bottom:2px solid transparent;background:none;padding:8px 10px;font-size:13px;font-weight:800;color:var(--muted)}
+.tab[aria-selected=true]{color:#fff;border-bottom-color:var(--brand)}
+/* 局面レール */
+.rail{display:flex;gap:4px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px;scrollbar-width:thin}
+.step{flex:1 0 96px;border:1px solid #2f4a62;background:#0f2134;border-radius:10px;padding:7px 8px;text-align:left;font-size:11px;color:#a9c1d5;position:relative}
+.step b{display:block;font-size:12px;color:#e7f3ff;line-height:1.35}
+.step .hp{font-size:10px;color:#7ee0d2;font-weight:800}
+.step.cur{background:#1b4150;border-color:var(--brand);color:#fff}
+.step.done{opacity:.6}
+.step.yae::after{content:"霞";position:absolute;top:5px;right:6px;font-size:10px;background:#5a2330;color:#ffb3ba;border-radius:5px;padding:0 4px;font-weight:800}
+/* メイン */
+.grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.9fr);gap:14px;align-items:start}
+.side{display:flex;flex-direction:column;gap:14px}
+.phasehead{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.pno{font-size:11px;font-weight:800;color:#b0e7e2;background:#163744;border:1px solid #557081;border-radius:7px;padding:3px 8px}
+.ptitle{font-size:22px;font-weight:800;margin:6px 0 2px;line-height:1.3}
+.trigger{font-size:13px;color:#d6e9f8;background:#132e40;border-left:3px solid var(--brand);padding:7px 10px;border-radius:0 8px 8px 0;margin:8px 0 0}
+.trigger span{color:var(--muted);font-size:11px;font-weight:700;margin-right:6px}
+.nav{display:flex;gap:6px}
+.alert{margin-top:12px;border:1px solid #8a3d48;background:#3a1720;border-radius:12px;padding:10px 12px}
+.alert h3{margin:0 0 4px;font-size:13px;color:#ffb3ba}
+.alert ul{margin:0;padding-left:18px;font-size:13px}
+.yaebox{margin-top:12px;border:2px solid var(--danger);background:#45131e;border-radius:12px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.yaebox strong{font-size:15px;color:#ffd0d5}
+/* 行動リスト */
+.mine{margin-top:14px;border:1px solid var(--c);border-radius:14px;background:color-mix(in srgb,var(--c) 9%,#0d1b2a);padding:12px 14px}
+.mine h3{margin:0 0 6px;font-size:14px;display:flex;align-items:center;gap:8px}
+.mine h3 i{width:12px;height:12px;border-radius:50%;background:var(--c)}
+.acts{list-style:none;margin:0;padding:0;counter-reset:a}
+.acts li{counter-increment:a;display:flex;gap:10px;padding:7px 0;border-top:1px dashed #2a4258;font-size:15px;line-height:1.5}
+.acts li:first-child{border-top:0}
+.acts li::before{content:counter(a);flex:0 0 22px;height:22px;border-radius:50%;background:var(--c,#3a5870);color:#06131f;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.acts.small li{font-size:13px;padding:5px 0}
+.acts.small li::before{flex-basis:18px;height:18px;font-size:10px}
+.none{color:var(--muted);font-size:13px}
+.src{display:inline-block;font-size:9px;font-weight:800;border-radius:4px;padding:0 4px;margin-left:6px;vertical-align:2px;white-space:nowrap}
+.s-A{background:#17394a;color:#9fe8de;border:1px solid #2e6474}
+.s-M{background:#2b2a4d;color:#c9c0ff;border:1px solid #4c4a85}
+.s-P{background:#1f3326;color:#a9e6b6;border:1px solid #3f6b4a}
+.s-K{background:#36263f;color:#e3b8f5;border:1px solid #6a4a7c}
+.s-Q{background:#4a3416;color:#ffd58f;border:1px solid #8b6526}
+.s-X{background:#2a2f38;color:#a8b2bf;border:1px solid #444d59}
+.allgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}
+.jcard{border:1px solid #2b445b;border-left:4px solid var(--c);border-radius:10px;background:#0e1f30;padding:8px 10px;cursor:pointer;text-align:left}
+.jcard:hover{background:#15304a}
+.jcard h4{margin:0 0 2px;font-size:13px;display:flex;justify-content:space-between}
+.jcard h4 small{color:var(--muted);font-weight:600;font-size:10px}
+.others{margin-top:12px}
+.others summary{cursor:pointer;font-size:12px;color:var(--muted);font-weight:700}
+.allitems{margin-top:12px;font-size:13px}
+.allitems h3{font-size:12px;color:var(--muted);margin:0 0 4px}
+/* 関係図 */
+.map svg{display:block;width:100%;height:auto}
+.maplegend{display:flex;gap:6px 12px;flex-wrap:wrap;font-size:11px;color:var(--muted);padding:8px 14px 12px}
+.maplegend span{display:flex;align-items:center;gap:5px}
+.maplegend s{display:inline-block;width:22px;height:0;border-top:3px solid;text-decoration:none}
+@keyframes flow{to{stroke-dashoffset:-24}}
+.flow{animation:flow 1.1s linear infinite}
+@media (prefers-reduced-motion:reduce){.flow{animation:none}}
+/* タイマー */
+.timers{display:grid;gap:8px}
+.timer{border:1px solid #2d4860;border-radius:10px;padding:8px 10px;background:#0e2032}
+.timer .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.timer .name{font-size:12px;font-weight:800}.timer .name small{color:var(--muted);font-weight:600;margin-left:4px}
+.timer .left{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums}
+.timer .bar{height:5px;background:#24384a;border-radius:4px;margin:6px 0;overflow:hidden}
+.timer .bar div{height:100%;background:var(--brand);width:0}
+.timer.warn .left{color:var(--warn)}.timer.warn .bar div{background:var(--warn)}
+.timer.over{border-color:var(--danger);background:#3a1720}.timer.over .left{color:var(--danger)}
+.timer .btns{display:flex;gap:6px}
+/* WS表 */
+.wsrow{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.wsrow button{min-width:42px}
+.wsout{font-size:24px;font-weight:900;color:var(--warn)}
+.wsout small{font-size:12px;color:var(--muted);font-weight:600;display:block}
+/* 一覧表 */
+.matrixwrap{overflow-x:auto}
+table.mx{border-collapse:separate;border-spacing:0;font-size:12px;min-width:1080px;width:100%}
+.mx th,.mx td{border-bottom:1px solid #223a50;border-right:1px solid #1b3045;padding:6px 7px;vertical-align:top;text-align:left}
+.mx thead th{position:sticky;top:0;background:#132a3f;font-size:11px;cursor:pointer}
+.mx tbody th{position:sticky;left:0;background:#10233a;white-space:nowrap;border-left:4px solid var(--c)}
+.mx td{cursor:pointer;line-height:1.5}
+.mx td:hover{background:#17324a}
+.mx .curcol{background:#173b4a}
+.mx tr.sel td,.mx tr.sel th{background:#1d3b33}
+.mx ul{margin:0;padding-left:14px}
+/* 準備 */
+.prepgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.prep{border:1px solid #2b445b;border-top:4px solid var(--c);border-radius:12px;background:#0e1f30;padding:10px 12px}
+.prep h3{margin:0 0 6px;font-size:14px}
+.prep label{display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:4px 0;cursor:pointer}
+.prep input{margin-top:4px;accent-color:var(--brand);width:16px;height:16px;flex:0 0 auto}
+.prep label.chk span{color:var(--muted);text-decoration:line-through}
+.prog{font-size:11px;color:var(--muted);font-weight:700}
+/* 動画 */
+.vgrid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.9fr);gap:14px}
+.yt{position:relative;aspect-ratio:16/9;background:#03080e}
+.yt>div,.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.yt .ph0{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;color:#a9c5da;font-size:13px;background:linear-gradient(150deg,#142b43,#071320)}
+.msg{padding:9px 11px;border-radius:9px;font-size:12px;border:1px solid #4c6074;background:#182d3d;margin:8px 0}
+.msg.ok{background:#0b3637;border-color:#277a79;color:#b8ffef}.msg.warn{background:#40311e;border-color:#947242;color:#ffe3a5}
+.bmlist{font-size:12px;border:1px solid #2d4860;border-radius:9px;max-height:260px;overflow-y:auto}
+.bm{display:flex;align-items:center;gap:8px;padding:6px 9px;border-bottom:1px solid #1d3348}
+.bm:last-child{border-bottom:0}
+.bm .t{font-variant-numeric:tabular-nums;font-weight:800;color:#7ee0d2;min-width:44px}
+.bm .nm{flex:1}.bm.cur{background:#173b4a}.bm .unset{color:#6f8aa1}
+.footer{margin-top:20px;font-size:11px;color:#8fabc3;border-top:1px solid #263c4e;padding-top:12px;line-height:1.8}
+.hidden{display:none!important}
+@media(max-width:980px){.grid,.vgrid{grid-template-columns:minmax(0,1fr)}.rules{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.wrap{padding:14px 12px 40px}.rules{gap:6px}.rule{padding:7px 9px;font-size:11px;line-height:1.45}.rule b{font-size:12px}.allgrid{grid-template-columns:1fr}.ptitle{font-size:19px}.acts li{font-size:14px}.jb{padding:6px 11px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+ <div><div class="kicker">FFXI · SHEOL GAOL AT3 · ODYSSEY</div><h1>Arebati Veng+25 2戦目 作戦ガイド</h1><p class="sub">LS当日用。自分のジョブを選び、合図（HP%）ごとに局面を進めてください。キー操作：← → で局面移動</p></div>
+ <a class="btn" href="https://jinko0914.seesaa.net/article/513963925.html" target="_blank" rel="noopener noreferrer">元記事（Part3）↗</a>
+</header>
+
+<section class="rules" aria-label="鉄則">
+ <div class="rule"><b>WSは本体だけ</b>護衛を殴ってTPを貯め、WSはArebatiに。</div>
+ <div class="rule"><b>八重霞45秒は本体WS禁止</b>75%・40%で来る。遠隔・キッスは対象外。</div>
+ <div class="rule"><b>キッスを1秒も遅らせない</b>獣はリキャスト即。遅れるWSは厳禁。</div>
+ <div class="rule"><b>WSはTP閾値まで待つ</b>サムライロール出目で閾値が変わる（右の早見表）。</div>
+</section>
+
+<div class="jobbar" id="jobbar" role="group" aria-label="自分のジョブ"><span class="lbl">自分のジョブ：</span></div>
+<div class="tabs" role="tablist">
+ <button class="tab" role="tab" data-tab="battle" aria-selected="true">戦闘の流れ</button>
+ <button class="tab" role="tab" data-tab="matrix" aria-selected="false">ジョブ×局面 一覧表</button>
+ <button class="tab" role="tab" data-tab="prep" aria-selected="false">事前チェック</button>
+ <button class="tab" role="tab" data-tab="video" aria-selected="false">動画で確認</button>
+</div>
+
+<!-- 戦闘の流れ -->
+<section id="tab-battle">
+ <nav class="rail" id="rail" aria-label="局面"></nav>
+ <div class="grid">
+  <div class="panel"><div class="pb" id="phaseView"></div></div>
+  <aside class="side">
+   <section class="panel map"><div class="ph"><div><h2>誰が誰に何をするか</h2><p>関係図です。実際の立ち位置・距離ではありません。</p></div></div><div id="mapBox"></div><div class="maplegend" id="mapLegend"></div></section>
+   <details class="panel" id="gimmickPanel"><summary class="ph" style="cursor:pointer;list-style:none"><div><h2>▸ ボス・護衛の仕様（知っておくこと）</h2><p>タップで開閉</p></div></summary><div class="pb" id="gimmicks"></div></details>
+   <section class="panel"><div class="ph"><div><h2>当日タイマー</h2><p>ゲーム内の合図に合わせて手動で開始。0秒で短い音が鳴ります。</p></div></div><div class="pb timers" id="timers"></div></section>
+   <section class="panel"><div class="ph"><div><h2>WS閾値早見表</h2><p>対象：ルドラ／マーシー／ラストスタンド／デトネーター</p></div></div><div class="pb"><div style="font-size:12px;color:var(--muted)">サムライロールの出目</div><div class="wsrow" id="wsrow"></div><div class="wsout" id="wsout"></div></div></section>
+  </aside>
+ </div>
+</section>
+
+<!-- 一覧表 -->
+<section id="tab-matrix" class="hidden">
+ <div class="panel"><div class="ph"><div><h2>ジョブ×局面 一覧表</h2><p>LSでの事前ブリーフィング用。セルを押すとその局面へ移動します。</p></div><button class="btn small" id="printBtn">印刷</button></div><div class="matrixwrap" id="matrix"></div></div>
+</section>
+
+<!-- 事前チェック -->
+<section id="tab-prep" class="hidden">
+ <div class="panel"><div class="ph"><div><h2>事前チェックリスト</h2><p>持ち込みインデ・武器・食事・開幕強化。チェックはこの端末に保存されます。</p></div><button class="btn small danger" id="prepReset">チェックを全解除</button></div><div class="pb prepgrid" id="prepBox"></div></div>
+</section>
+
+<!-- 動画 -->
+<section id="tab-video" class="hidden">
+ <div class="vgrid">
+  <section class="panel">
+   <div class="ph"><h2>討伐動画（YouTube公式プレイヤー）</h2><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn small vsrc" data-v="A" aria-pressed="true">A：白・ナ視点</button><button class="btn small vsrc" data-v="B" aria-pressed="false">B：風・吟視点</button><button class="btn small main" id="vload">プレイヤーを読み込む</button></div></div>
+   <div class="yt"><div id="ytPlayer"></div><div class="ph0" id="ytPh"><b>動画は未読み込みです</b><span>「プレイヤーを読み込む」で公式プレイヤーを表示します。読み込めない場合は <a id="ytLink" href="https://www.youtube.com/watch?v=IUVoTOXzPPQ" target="_blank" rel="noopener noreferrer">YouTubeで直接見る ↗</a></span></div></div>
+   <div class="pb" style="font-size:12px;color:var(--muted)">動画位置 <b id="vclock" style="color:#fff">--:--</b>　<a id="ytLink2" href="https://www.youtube.com/watch?v=IUVoTOXzPPQ" target="_blank" rel="noopener noreferrer">YouTubeで開く ↗</a>　<span>※両動画とも「2戦方式」の討伐動画。ここでは<b>2戦目</b>の局面だけを登録します。</span></div>
+  </section>
+  <section class="panel">
+   <div class="ph"><div><h2>局面ブックマーク（手動）</h2><p>動画を止めた位置を、局面の開始点として登録します。A/Bは別々に保存。</p></div></div>
+   <div class="pb">
+    <label for="bmPhase" style="font-size:12px;font-weight:700">登録する局面</label>
+    <select id="bmPhase" style="width:100%;padding:8px;border-radius:9px;background:#0b1d30;border:1px solid #40627a;margin:4px 0 8px"></select>
+    <div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn main" id="bmSet">現在位置で登録</button><button class="btn" id="bmDel">この登録を削除</button><button class="btn" id="bmFollow" aria-pressed="true">局面を動画に追従：ON</button></div>
+    <div class="msg warn" id="bmMsg" role="status">プレイヤーを読み込んでください。</div>
+    <div class="bmlist" id="bmList"></div>
+    <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn small" id="bmExport">JSON書き出し</button><label class="btn small" style="display:inline-flex;align-items:center">JSON読み込み<input type="file" id="bmImport" accept="application/json,.json" hidden></label></div>
+    <p style="font-size:11px;color:var(--muted);margin:8px 0 0">登録点は「目視による手動登録」です。未登録の区間で局面を推定することはありません。リストの時刻を押すと動画がその位置へ移動します。</p>
+   </div>
+  </section>
+ </div>
+</section>
+
+<div class="footer">
+ <b>出典ラベル</b>：<span class="src s-A">記事</span> JinkoのFF11日記 Part3 の記載／<span class="src s-M">記事の動画解析値</span> 記事内の1戦分の実測値（毎回同じとは限らない）／<span class="src s-P">旧記事Part1/2</span> 同ブログの旧戦術記事（Part3と矛盾しない補足のみ採用）／<span class="src s-K">他PT記事</span> 別PT（FF11人生を捧げるブログ）の実戦記録／<span class="src s-Q">要確認</span> 記事内で記述が揺れている・LSで方針を決めるもの／<span class="src s-X">記載なし</span> 記事に個別記載なし。<br>
+ 参照：<a href="https://jinko0914.seesaa.net/article/513963925.html" target="_blank" rel="noopener noreferrer">JinkoのFF11日記 — Arebati veng25 Part3</a>（正本）・<a href="https://jinko0914.seesaa.net/article/505643713.html" target="_blank" rel="noopener noreferrer">Part1</a>・<a href="https://jinko0914.seesaa.net/article/511834767.html" target="_blank" rel="noopener noreferrer">Part2</a> ／ FF11人生を捧げるブログ <a href="https://www.kagurazakac.com/entry/2026/08/03/000000" target="_blank" rel="noopener noreferrer">魔法のキャンセル問題</a>・<a href="https://www.kagurazakac.com/entry/2026/04/13/000000" target="_blank" rel="noopener noreferrer">ヘイト管理</a> ／ 動画A <a href="https://www.youtube.com/watch?v=IUVoTOXzPPQ" target="_blank" rel="noopener noreferrer">白魔道士・ナイト目線</a> ／ 動画B <a href="https://www.youtube.com/watch?v=8j_RGlLJNeY" target="_blank" rel="noopener noreferrer">風＆吟視点</a>。本ツールは記事内容を整理した非公式の学習・当日補助ツールで、ゲーム素材や動画映像は複製していません。
+</div>
+</div>
+
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+const NS='http://www.w3.org/2000/svg';
+const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const SRC={A:'記事',M:'記事の動画解析値',P:'旧記事Part1/2',K:'他PT記事',Q:'要確認',X:'記載なし'};
+const GIMMICKS=[
+ ['Arebatiは最大HPの75%で出現。釣るだけでは護衛は出ず、1ダメージで護衛がpop'],
+ ['HP75%・40%で護衛（ラズ族）pop＋八重霞45秒'],
+ ['特殊技のTPしきい値は1000。TP吸収キッスで完封するのが前提'],
+ ['ダメージが通るのは突属性の近接・遠隔のみ。属性攻撃は無効','P'],
+ ['エフェクト中は氷ベースの連携（硬化・湾曲・闇）を吸収し、HPを70,000以上回復','P'],
+ ['強化を消す特殊技が多い','P'],
+ ['通常攻撃の追加効果に物理防御ダウン-25%（パナケイアで治す）','P'],
+ ['護衛の攻撃力は非常に高い。盾以外に向くとパーティ崩壊のおそれ','P'],
+ ['護衛はpop直後しばらく魔法・アビを受け付けない（急いで詠唱するとキャンセルされる）','K'],
+];
+
+// ---- データ（出典：Jinko Part3）。各行動は [文, 出典] 。出典省略時は記事。
+const JOBS=[
+ {id:'pld',short:'ナ',name:'ナイト',role:'盾：護衛のタゲ保持',
+  prep:[['持ち込みインデ：インデリジェネ'],['開幕：マジェスティ・プロテスV・シェルIV']]},
+ {id:'dnc',short:'踊',name:'踊り子',role:'盾/アタッカー：ボックス維持・ルドラ',
+  prep:[['持ち込みインデ：インデバリア'],['武器：トゥワシュトラ＋グレティナイフRank30'],['食事：牛丼+1が望ましい'],['サンバ：剣の舞い5振り＋ヘイストサンバ5振り']]},
+ {id:'rdm',short:'赤',name:'赤魔道士',role:'アタッカー：初撃・寝かせ・弱体',
+  prep:[['持ち込みインデ：インデデック'],['武器：マンダウ一択'],['開幕用にマンダウ以外の短剣も持つ（マンダウは追加効果で毒）','P'],['食事：スコッチエッグ+1'],['サイレス命中用：レジストハック2回以上＋カイロンホーズ'],['開幕強化は1分以内が目安：ヘイストII・ファランクスII・シェルV・ストライII・ゲインスト・リフレシュIII・ストンスキン・アクアベール']]},
+ {id:'cor',short:'コ',name:'コルセア',role:'弱体/アタッカー：ロール・遠隔・ワイルドカード',
+  prep:[['持ち込みインデ：インデフューリー'],['武器：ロスタム Type:B／遠隔：フォーマルハウト'],['食事：スコッチエッグ+1'],['ロール順を確認：階段上 クルケ→ランダムディール→カオス／呪歌完成直前 クルケ→サムライ']]},
+ {id:'brd',short:'吟',name:'吟遊詩人',role:'支援/アタッカー：呪歌・エレジー・WS調整',
+  prep:[['持ち込みインデ：インデフェンド（詩人か獣のどちらか）'],['武器：カルンウェナン'],['BF突入前にTP3000（アフターマスLv3をすぐ付けられるように）','P'],['食事：スコッチエッグ+1'],['本歌：メヌ3・4・5／栄典／アリア／バラード2＋3']]},
+ {id:'bst',short:'獣',name:'獣使い',role:'支援：ペットのTP吸収キッスで特殊技を封じる',
+  prep:[['持ち込みインデ：インデフェンド（詩人か獣のどちらか）'],['汁ペット（TP吸収キッス）の準備'],['ペットの被魔法ダメージカット装備（サイレス切れのブリザガ対策）','P'],['開幕：K.インスティンクト'],['獣本体は攻撃に参加しない']]},
+];
+const ATK=['dnc','rdm','cor','brd'];
+
+// links: [from,to,type]  type: hate/melee/ws/kiss/debuff/sleep
+const PHASES=[
+ {id:'p0',hp:'突入後',label:'階段上で強化',title:'階段上で事前強化',trigger:'突入して階段上に集合したら',adds:0,
+  all:[['持ち込みインデを確認'],['戦闘の流れ（順番）を厳守。開幕のヘイト管理は難しい']],
+  jobs:{pld:{tag:'マジェスティ',do:[['マジェスティ、プロテスV、シェルIV']]},
+   dnc:{tag:'待機',do:[['階段上での個別行動は記事に記載なし','X']]},
+   rdm:{tag:'強化',do:[['ヘイストII・ファランクスII・シェルV・ストライII・ゲインスト・リフレシュIII・ストンスキン・アクアベール'],['所要は1分以内が目安']]},
+   cor:{tag:'カオス',do:[['クルケ → ランダムディール（対象：クルケッドカード）→ カオスロール'],['カオスの出目は4か7以上。スネークアイを使ってでも。8（アンラッキー）は避ける'],['2個目のロールはまだ振らない（ナ突撃後に集合してから）']]},
+   brd:{tag:'下地5曲',do:[['下地5曲だけ歌う（本歌はスリプルII直後に上書き）'],['ナイトへのダージュはしない（2体目護衛のヘイトが取りにくくなった例）','P']]},
+   bst:{tag:'K.インスティンクト',do:[['K.インスティンクト'],['対象はプラントイド','P']]}},
+  ng:[['コルセアは2個目のロールをここで振らない'],['詩人はここで本歌を歌わない（下地のみ）']],links:[]},
+ {id:'p1',hp:'開幕',label:'ナが釣る',title:'ナイトが釣りに向かう',trigger:'全員の強化が終わったら',adds:0,
+  all:[['ナイト以外は本体に触らない／ナの突撃後に集合'],['Arebatiは最大HPの75%で出現。釣るだけでは護衛は出ない'],['2戦目は時間がギリギリになりやすい。1戦目の削り量が鍵','P']],
+  jobs:{pld:{tag:'釣り',do:[['センチネル＋ランパート＋フィールティ'],['Arebatiに絡まれる形で釣る']]},
+   dnc:{tag:'集合',do:[['ナ突撃後に集合']]},rdm:{tag:'集合',do:[['ナ突撃後に集合。初撃の準備']]},
+   cor:{tag:'集合',do:[['ナ突撃後、全員が集合してから2個目のロール（呪歌完成直前に クルケ→サムライロール）'],['サムライの出目6は許容']]},
+   brd:{tag:'集合',do:[['ナ突撃後に集合。スリプルII直後の本歌に備える']]},bst:{tag:'集合',do:[['ナ突撃後に集合']]}},
+  ng:[['赤の初撃より前に誰かがダメージを入れると護衛が早く出る（1ダメージで出現）']],links:[['pld','boss','hate']]},
+ {id:'p2',hp:'75%',label:'初撃・護衛1',title:'75%：赤が初撃 → 護衛1体目＋八重霞',trigger:'ナイトが釣って位置についたら',adds:1,yae:true,
+  all:[['八重霞（45秒）：本体へWSしない'],['ナが護衛のタゲを取るまで手を出さない']],
+  jobs:{pld:{tag:'護衛タゲ',do:[['護衛pop直後は1〜2秒置いてから詠唱（pop直後は受け付けずキャンセルされる）','K'],['護衛にフラッシュ＋シールドバッシュでタゲ確保'],['開幕は本気で護衛のタゲを取る（甘いと詩人に持っていかれる）','P']]},
+   dnc:{tag:'待機',do:[['ボックスステップの準備（次の局面で本体へ）']]},
+   rdm:{tag:'スリプルII',do:[['本体に一撃 → 護衛1体目が出現'],['開幕はマンダウ以外の短剣で殴る（マンダウの追加効果：毒）','P'],['スタイミー＋スリプルIIで本体を寝かせる']]},
+   cor:{tag:'サムライ',do:[['呪歌完成直前に クルケ→サムライロール']]},
+   brd:{tag:'本歌',do:[['スリプルIIで寝た直後に本歌で上書き（メヌ3・4・5／栄典／アリア／バラード2＋3）']]},
+   bst:{tag:'待機',do:[['ペットを本体へ向かわせる準備（キッスは次局面以降リキャスト毎）','X']]}},
+  ng:[['八重霞中に本体へWSしない'],['本体を起こさない（寝かせ中）'],['護衛pop直後に慌てて詠唱 → キャンセルされ再詠唱まで数秒遅れ、護衛が盾以外へ突進して瞬殺','K']],links:[['rdm','boss','sleep'],['pld','add1','hate']]},
+ {id:'p3',hp:'75%',label:'弱体→開始',title:'弱体を入れて攻撃開始',trigger:'本体が寝て、ナが護衛を固定したら',adds:1,
+  all:[['サイレス・パライズIIの2種 → ディアIIIが入ったらアタッカー全員で開始']],
+  jobs:{pld:{tag:'護衛固定',do:[['護衛のタゲ維持'],['戦闘直後のマジェスティケアルは本体のタゲを取る。範囲ケアルの開始タイミングを見極める','P']]},
+   dnc:{tag:'ボックス',do:[['本体にボックスステップを完成させる（10段階を維持）']]},
+   rdm:{tag:'サイレス',do:[['連続魔＋サボトゥール → サイレス、パライズII'],['必ずサイレスから完了させる（4〜5回連打してからパライズII）','P'],['2種完了後ディアIII'],['サイレスが入ったら右のサイレスタイマー開始']]},
+   cor:{tag:'ショット',do:[['ライトショット（ディアIII）／アイスショット（パライズII）']]},
+   brd:{tag:'エレジー',do:[['本体にエレジー（戦闘終了まで持続）'],['開幕はナイトル＋エレジー','P']]},
+   bst:{tag:'キッス',do:[['TP吸収キッスをリキャストごとに']]}},
+  ng:[['弱体2種＋ディアIIIの前に攻撃を始めない']],links:[['pld','add1','hate'],['rdm','boss','debuff'],['dnc','boss','debuff'],['brd','boss','debuff'],['cor','boss','debuff'],['pet','boss','kiss']]},
+ {id:'p4',hp:'75→40%',label:'中盤ループ',title:'中盤：護衛でTP → WSは本体',trigger:'攻撃開始〜40%まで',adds:1,
+  all:[['アタッカーは護衛を殴ってTP、WSは本体だけ'],['WSはサムライ出目の閾値まで待つ（与TPで特殊技を誘発させない）'],['40%到達は残り時間9分30秒前後が必須'],['本体の通常攻撃で物理防御ダウン-25% → パナケイアで治す','P']],
+  jobs:{pld:{tag:'護衛＋回復',do:[['護衛のタゲ保持、範囲ケアル等で回復'],['本体のヘイト2位は意識しない'],['アタッカーのHPが減ってもすぐ回復しない'],['ヘイトは取りすぎず、2体目pop時に一気に上げる方針が安定'],['レッドロータス等で累積同一技耐性対策に参加']]},
+   dnc:{tag:'ルドラ',do:[['護衛を殴ってTP → 本体にルドラストーム'],['C.フラリッシュ後の2回目WS狙いの時のみTP1000即撃ち可'],['ボックスステップ10段階を維持']]},
+   rdm:{tag:'マーシー',do:[['護衛を殴ってTP → 本体にマーシーストローク'],['サイレス（約6分20秒）が切れる前にアドルII'],['サイレス再付与はサボトゥール併用を優先。パライズII（約7分37秒）は単独でOK'],['2回目のサイレスは1回目の半分程度にレジストされた例あり。タイマーより早めに確認','P']]},
+   cor:{tag:'ラスト/デト',do:[['ラストスタンド・デトネーター（デトは攻撃力2倍補正）'],['八重霞中も遠隔は継続OK']]},
+   brd:{tag:'モーダント',do:[['他のWSと同じタイミングでモーダントライム'],['持ち込みインデが切れたら ピアニッシモ＋スケルツォ で踊り子のアリアを上書き（ブリザドV即死対策）']]},
+   bst:{tag:'キッス',do:[['TP吸収キッスをリキャストごと（1秒も遅らせない）'],['通常時の吸収間隔は約32秒（30〜36秒）','M'],['キッスが遅れるWSは厳禁']]}},
+  ng:[['護衛にWSしない'],['TP閾値前にWSしない'],['獣のキッス遅延']],links:[['pld','add1','hate'],['dnc','add1','melee'],['rdm','add1','melee'],['brd','add1','melee'],['cor','boss','ws'],['dnc','boss','ws'],['rdm','boss','ws'],['brd','boss','ws'],['pet','boss','kiss']]},
+ {id:'p5',hp:'40%',label:'護衛2・霞',title:'40%：護衛2体目＋八重霞',trigger:'本体40%未満（目標：残り9分30秒前後）',adds:2,yae:true,
+  all:[['八重霞（45秒）：本体へWSしない'],['コルセアの遠隔・ペットのキッスは継続OK'],['赤・コ・詩は2体目の護衛を殴らない（オートアタックのヘイトでナからタゲを奪う恐れ）','P']],
+  jobs:{pld:{tag:'インビン',do:[['インターヴィーン → インビンシブル の順でヘイト確保'],['取り切れなければフラッシュ＋シールドバッシュ追加'],['火力が高いPTではランパートまで使ってようやく取れた例。強めすぎると本体のタゲを取る危険もある','K']]},
+   dnc:{tag:'WS停止',do:[['1体目の護衛を殴ってTP。本体WSは霞明けまで止める']]},
+   rdm:{tag:'WS停止',do:[['本体WSは霞明けまで止める。弱体の残り時間を確認'],['2体目の護衛は殴らない','P']]},
+   cor:{tag:'遠隔継続',do:[['遠隔攻撃は継続OK（八重霞の対象外）'],['2体目の護衛は殴らない','P'],['八重霞中にラストスタンド以外の遠隔WSを連打して同一技耐性をリセットした例','P']]},
+   brd:{tag:'WS停止',do:[['本体WSは霞明けまで止める'],['2体目の護衛は殴らない','P']]},
+   bst:{tag:'キッス',do:[['キッスはリキャストごとに継続（八重霞の対象外）']]}},
+  ng:[['八重霞中に本体へWS'],['ナ以外が2体目のタゲを取る'],['赤・コ・詩が2体目の護衛を殴る','P']],links:[['pld','add2','hate'],['pld','add1','hate'],['dnc','add1','melee'],['rdm','add1','melee'],['brd','add1','melee'],['cor','boss','ws'],['pet','boss','kiss']]},
+ {id:'p6',hp:'25%',label:'バースト',title:'25%：アンリーシュ＋グランドパー → ワイルドカード',trigger:'本体25%',adds:2,
+  all:[['アンリーシュ＋グランドパー → 直後にワイルドカード']],
+  jobs:{pld:{tag:'タゲ維持',do:[['護衛2体のタゲ維持']]},
+   dnc:{tag:'グランドパー',do:[['グランドパー（アンリーシュと同時）']]},
+   rdm:{tag:'マーシー',do:[['本体にマーシーストローク継続']]},
+   cor:{tag:'ワイルド',do:[['アンリーシュ＋グランドパー発動後にワイルドカード']]},
+   brd:{tag:'TP1000即',do:[['アンリーシュ中はモーダントライムをTP1000で即撃ち'],['ワイルドカードが4以下なら メヌ×4＋栄典（＋マルカート）でかけ直し']]},
+   bst:{tag:'アンリーシュ',do:[['アンリーシュ'],['この区間でキッスを8回連打（間隔6〜17秒）した実測例','M']]}},
+  ng:[['ワイルドカードをアンリーシュ＋グランドパーより先に使う']],links:[['pld','add1','hate'],['pld','add2','hate'],['dnc','boss','ws'],['rdm','boss','ws'],['brd','boss','ws'],['cor','boss','ws'],['pet','boss','kiss']]},
+ {id:'p7',hp:'20%',label:'終盤',title:'20%：本体が暴れる → 詩人はWS調整',trigger:'本体20%（アンリーシュ終了後）',adds:2,
+  all:[['本体が「暴れる」ようになる'],['サイレスが切れたらサボトゥール併用で再付与']],
+  jobs:{pld:{tag:'タゲ維持',do:[['護衛のタゲ維持']]},
+   dnc:{tag:'ルドラ',do:[['ルドラストーム継続（閾値を守る）']]},
+   rdm:{tag:'サイレス',do:[['サイレス切れ→サボトゥール併用で再付与'],['パライズII切れは単独詠唱で可']]},
+   cor:{tag:'ラスト/デト',do:[['ラストスタンド・デトネーター継続']]},
+   brd:{tag:'ガスト',do:[['攻撃参加から離脱し、ガストスラッシュを連打（同一技耐性対策）'],['記事の更新履歴では「20%以下も攻撃参加・モーダント基本」との記述もあり。LSで事前にどちらか決める','Q'],['与TPが過剰になりそうならガストスラッシュ']]},
+   bst:{tag:'キッス',do:[['キッスをリキャストごとに継続'],['最後の吸収は残0:55の実測例','M']]}},
+  ng:[['詩人の方針（離脱 or 攻撃参加）を当日決めずに始める'],['キッス遅延']],links:[['pld','add1','hate'],['pld','add2','hate'],['dnc','add1','melee'],['rdm','boss','debuff'],['brd','boss','ws'],['cor','boss','ws'],['dnc','boss','ws'],['pet','boss','kiss']]},
+ {id:'p8',hp:'0%',label:'討伐',title:'押し切って討伐',trigger:'残りHPを削り切る',adds:2,
+  all:[['役割を最後まで維持'],['物理攻撃力ダウンフィールドが来たら討伐不可（記事）'],['実測：本体の特殊技0回・最大到達TP963（余裕37TP）','M']],
+  jobs:{pld:{tag:'タゲ維持',do:[['護衛のタゲ維持']]},dnc:{tag:'WS',do:[['閾値どおりにWS']]},rdm:{tag:'WS',do:[['閾値どおりにWS']]},cor:{tag:'WS',do:[['閾値どおりにWS']]},brd:{tag:'WS調整',do:[['20%以降の方針どおり']]},bst:{tag:'キッス',do:[['最後までキッス']]}},
+  ng:[],links:[['pld','add1','hate'],['pld','add2','hate'],['dnc','boss','ws'],['rdm','boss','ws'],['cor','boss','ws'],['pet','boss','kiss']]},
+];
+const WS={7:2000,8:2000,9:2000,10:2000,2:2500,11:2500,6:1700};
+
+// ---- 状態
+let job=store.get('arebati.job','all');if(job!=='all'&&!JOBS.some(j=>j.id===job))job='all';
+let pi=Math.max(0,Math.min(PHASES.length-1,store.get('arebati.phase',0)|0));
+let tab='battle',roll=store.get('arebati.roll',null);
+const cssVar=n=>getComputedStyle(document.documentElement).getPropertyValue('--'+n).trim();
+const jobColor=id=>cssVar(id);
+const el=(tag,attrs={},...kids)=>{const n=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='class')n.className=v;else if(k==='style')n.style.cssText=v;else if(k.startsWith('on'))n.addEventListener(k.slice(2),v);else n.setAttribute(k,v)}for(const c of kids)if(c!=null)n.append(c);return n};
+const srcTag=s=>el('span',{class:'src s-'+s},SRC[s]);
+const actList=(items,cls='acts')=>{if(!items||!items.length)return el('p',{class:'none'},'特になし');const ul=el('ul',{class:cls});for(const[t,s='A']of items){const li=el('li');li.append(el('span',{},t,s!=='A'?srcTag(s):null));ul.append(li)}return ul};
+
+// ---- ジョブバー
+function buildJobBar(){const bar=$('jobbar');const opts=[{id:'all',short:'全',name:'全体を見る'},...JOBS];
+ for(const j of opts){const b=el('button',{class:'jb','data-id':j.id,'aria-pressed':String(job===j.id),style:j.id==='all'?'':'--c:var(--'+j.id+')',onclick:()=>setJob(j.id)});if(j.id!=='all')b.append(el('i',{style:'background:var(--'+j.id+')'}));b.append(j.name);bar.append(b)}}
+function setJob(id){job=id;store.set('arebati.job',id);for(const b of $('jobbar').querySelectorAll('.jb'))b.setAttribute('aria-pressed',String(b.dataset.id===id));renderAll()}
+
+// ---- 局面
+function buildRail(){const r=$('rail');PHASES.forEach((p,i)=>{r.append(el('button',{class:'step'+(p.yae?' yae':''),onclick:()=>setPhase(i,true)},el('span',{class:'hp'},p.hp),el('b',{},p.label)))})}
+function setPhase(i,fromUser){pi=Math.max(0,Math.min(PHASES.length-1,i));store.set('arebati.phase',pi);renderBattle();if(fromUser)videoJumpToPhase()}
+function renderRail(){[...$('rail').children].forEach((b,i)=>{b.classList.toggle('cur',i===pi);b.classList.toggle('done',i<pi);if(i===pi)b.scrollIntoView({block:'nearest',inline:'nearest'})})}
+function renderPhase(){const p=PHASES[pi],v=$('phaseView');v.replaceChildren();
+ const head=el('div',{class:'phasehead'},el('div',{},el('span',{class:'pno'},'局面 '+(pi+1)+' / '+PHASES.length+'　HP '+p.hp),el('div',{class:'ptitle'},p.title)),
+  el('div',{class:'nav'},el('button',{class:'btn',onclick:()=>setPhase(pi-1,true),disabled:pi===0?'':null},'◀ 前'),el('button',{class:'btn main',onclick:()=>setPhase(pi+1,true)},'次の局面 ▶')));
+ if(pi===0)head.querySelector('.nav button').disabled=true;if(pi===PHASES.length-1)head.querySelector('.nav .main').disabled=true;
+ v.append(head,el('div',{class:'trigger'},el('span',{},'合図'),p.trigger));
+ if(p.yae)v.append(el('div',{class:'yaebox'},el('strong',{},'⚠ 八重霞 45秒：本体へWS禁止（遠隔・キッスはOK）'),el('button',{class:'btn main',onclick:()=>startTimer('yae')},'45秒タイマー開始')));
+ if(job==='all'){
+  v.append(el('div',{class:'allitems'},el('h3',{},'全員'),actList(p.all,'acts small')));
+  const g=el('div',{class:'allgrid'});for(const j of JOBS){const a=p.jobs[j.id];g.append(el('button',{class:'jcard',style:'--c:var(--'+j.id+')',onclick:()=>setJob(j.id),title:j.name+'の画面にする'},el('h4',{},j.name,el('small',{},'タップで拡大')),actList(a.do,'acts small')))}v.append(g);
+ }else{const j=JOBS.find(x=>x.id===job),a=p.jobs[job];
+  v.append(el('div',{class:'mine',style:'--c:var(--'+job+')'},el('h3',{},el('i'),'あなた（'+j.name+'）がやること'),actList(a.do)));
+  v.append(el('div',{class:'allitems'},el('h3',{},'全員共通'),actList(p.all,'acts small')));
+  const d=el('details',{class:'others'},el('summary',{},'他のメンバーの動き'));const g=el('div',{class:'allgrid'});
+  for(const o of JOBS){if(o.id===job)continue;g.append(el('button',{class:'jcard',style:'--c:var(--'+o.id+')',onclick:()=>setJob(o.id)},el('h4',{},o.name),actList(p.jobs[o.id].do,'acts small')))}d.append(g);v.append(d)}
+ if(p.ng.length)v.append(el('div',{class:'alert'},el('h3',{},'✕ この局面でやってはいけないこと'),actList(p.ng,'')));
+}
+
+// ---- 関係図
+const NODES={boss:[420,175,'BOSS','Arebati'],add1:[430,300,'護衛1','ADD 1'],add2:[430,50,'護衛2','ADD 2'],pld:[300,240],dnc:[170,70],rdm:[170,145],cor:[170,220],brd:[170,295],bst:[310,40],pet:[310,115]};
+const LINK={hate:{c:'#8eb4ff',d:'',w:3,n:'ヘイト・タゲ保持'},melee:{c:'#c5d4e4',d:'4 6',w:1.6,n:'通常攻撃でTP'},ws:{c:'#fa8f93',d:'8 4',w:3,n:'WS（本体のみ）'},kiss:{c:'#75f5c6',d:'6 6',w:3,n:'TP吸収キッス'},debuff:{c:'#f6be69',d:'3 5',w:2.4,n:'弱体・ステップ'},sleep:{c:'#c9a4ff',d:'2 4',w:2.4,n:'寝かせ'}};
+const sv=(tag,a={},txt)=>{const n=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(a))n.setAttribute(k,v);if(txt!=null)n.textContent=txt;return n};
+function renderMap(){const p=PHASES[pi];const s=sv('svg',{viewBox:'0 0 560 350',role:'img','aria-label':'局面ごとの行動関係図'});
+ s.append(sv('rect',{width:560,height:350,fill:'#081524'}));
+ const defs=sv('defs');for(const[k,l]of Object.entries(LINK)){const m=sv('marker',{id:'ar-'+k,markerWidth:6,markerHeight:6,refX:5,refY:3,orient:'auto'});m.append(sv('path',{d:'M0,0 L6,3 L0,6 Z',fill:l.c}));defs.append(m)}s.append(defs);
+ if(p.yae)s.append(sv('text',{x:420,y:240,'text-anchor':'middle','font-size':15,fill:'#ffb3ba','font-weight':800},'八重霞中：WS禁止'));
+ const focus=id=>job==='all'||id===job||(job==='bst'&&id==='pet');
+ const r=(id)=>id==='boss'?32:id.startsWith('add')?22:id==='pet'?15:19;
+ for(const[f,t,type]of p.links){const a=NODES[f],b=NODES[t],l=LINK[type];const dx=b[0]-a[0],dy=b[1]-a[1],len=Math.hypot(dx,dy),ra=r(f)+3,rb=r(t)+6;
+  const ln=sv('line',{x1:a[0]+dx/len*ra,y1:a[1]+dy/len*ra,x2:b[0]-dx/len*rb,y2:b[1]-dy/len*rb,stroke:l.c,'stroke-width':l.w,'stroke-dasharray':l.d||'none','stroke-linecap':'round','marker-end':'url(#ar-'+type+')',opacity:focus(f)?.95:.18});
+  if(l.d&&focus(f))ln.setAttribute('class','flow');s.append(ln)}
+ const enemy=(id,show)=>{if(!show)return;const[x,y,t,lab]=NODES[id];const g=sv('g');g.append(sv('circle',{cx:x,cy:y,r:r(id),fill:'#4e2332',stroke:id==='boss'?'#f5808d':'#dfa076','stroke-width':2.5}));g.append(sv('text',{x,y:y+4,'text-anchor':'middle',fill:'#fff','font-size':id==='boss'?13:10,'font-weight':800},t));g.append(sv('text',{x:x+r(id)+6,y:y+5,fill:'#ffcbd0','font-size':13,'font-weight':700},lab));s.append(g)};
+ enemy('boss',true);enemy('add1',p.adds>=1);enemy('add2',p.adds>=2);
+ const units=[...JOBS.map(j=>({id:j.id,short:j.short,tag:p.jobs[j.id].tag})),{id:'pet',short:'PET',tag:''}];
+ for(const u of units){const[x,y]=NODES[u.id],c=jobColor(u.id),on=focus(u.id);const g=sv('g',{opacity:on?1:.35,style:'cursor:pointer'});
+  if(u.id!=='pet')g.addEventListener('click',()=>setJob(u.id));
+  if(on&&job!=='all')g.append(sv('circle',{cx:x,cy:y,r:r(u.id)+9,fill:'none',stroke:c,'stroke-width':2,'stroke-dasharray':'4 4'}));
+  g.append(sv('circle',{cx:x,cy:y,r:r(u.id),fill:'#112132',stroke:c,'stroke-width':2.5}));
+  g.append(sv('text',{x,y:y+(u.id==='pet'?4:6),'text-anchor':'middle',fill:'#fff','font-size':u.id==='pet'?9:15,'font-weight':900},u.short));
+  if(u.tag){const below=u.id==='pld';g.append(sv('text',{x:below?x:x-r(u.id)-7,y:below?y+40:y+5,'text-anchor':below?'middle':'end',fill:c,'font-size':14,'font-weight':800},u.tag))}
+  s.append(g)}
+ s.append(sv('text',{x:10,y:342,fill:'#6f8aa1','font-size':12},'関係図：位置・距離は実際のバトルフィールドと無関係'));
+ $('mapBox').replaceChildren(s)}
+function buildLegend(){for(const l of Object.values(LINK)){$('mapLegend').append(el('span',{},el('s',{style:'border-top-color:'+l.c+(l.d?';border-top-style:dashed':'')}),l.n))}}
+
+// ---- タイマー
+const TIMERS={yae:{name:'八重霞',note:'75%・40%で開始',sec:45,jobs:'all'},sil:{name:'サイレス',note:'約6分20秒（2回目は短い例あり）',sec:380,jobs:['rdm','cor']},para:{name:'パライズII',note:'約7分37秒',sec:457,jobs:['rdm','cor']},kiss:{name:'キッス目安',note:'実測約32秒・自動で繰り返し',sec:32,loop:true,jobs:['bst']}};
+const tstate={};let actx=null;
+function beep(f=880){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=f;g.gain.setValueAtTime(.15,actx.currentTime);g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+.35);o.connect(g).connect(actx.destination);o.start();o.stop(actx.currentTime+.36)}catch(e){}}
+function startTimer(k){tstate[k]={end:performance.now()+TIMERS[k].sec*1000,fired:false};try{actx=actx||new (window.AudioContext||window.webkitAudioContext)()}catch(e){}renderTimers()}
+function stopTimer(k){delete tstate[k];renderTimers()}
+function renderTimers(){const box=$('timers');box.replaceChildren();
+ for(const[k,t]of Object.entries(TIMERS)){if(job!=='all'&&t.jobs!=='all'&&!t.jobs.includes(job))continue;
+  const d=el('div',{class:'timer','data-k':k},el('div',{class:'row'},el('div',{class:'name'},t.name,el('small',{},t.note,k==='kiss'?srcTag('M'):null)),el('div',{class:'left'},fmt(t.sec))),el('div',{class:'bar'},el('div')),
+   el('div',{class:'btns'},el('button',{class:'btn small main',onclick:()=>startTimer(k)},tstate[k]?'リスタート':'開始'),el('button',{class:'btn small',onclick:()=>stopTimer(k)},'停止')));box.append(d)}
+ tickTimers()}
+const fmt=s=>{s=Math.max(0,Math.ceil(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+function tickTimers(){const now=performance.now();for(const d of $('timers').children){const k=d.dataset.k,t=TIMERS[k],st=tstate[k];let left=t.sec;
+ if(st){left=(st.end-now)/1000;if(left<=0){if(t.loop){st.end+=t.sec*1000;left+=t.sec;beep(1040)}else if(!st.fired){st.fired=true;beep(660)}}}
+ d.querySelector('.left').textContent=st&&left<=0?'終了':fmt(left);d.querySelector('.bar div').style.width=(st?Math.max(0,left)/t.sec*100:0)+'%';
+ d.classList.toggle('warn',!!st&&left>0&&left<=Math.min(10,t.sec*.25));d.classList.toggle('over',!!st&&left<=0)}}
+setInterval(tickTimers,200);
+
+// ---- WS早見
+function buildWS(){const row=$('wsrow');for(let n=1;n<=11;n++)row.append(el('button',{class:'btn small','data-n':n,'aria-pressed':String(roll===n),onclick:()=>{roll=n;store.set('arebati.roll',n);renderWS()}},String(n)));renderWS()}
+function renderWS(){for(const b of $('wsrow').children)b.setAttribute('aria-pressed',String(Number(b.dataset.n)===roll));const o=$('wsout');o.replaceChildren();
+ if(roll==null){o.append(el('small',{},'出目を選んでください'));return}
+ if(WS[roll])o.append('TP '+WS[roll]+' 超えたらWS',el('small',{},'サムライ出目'+roll+'（記事の表）'));
+ else o.append(el('span',{style:'font-size:16px'},'記事に記載なし'),el('small',{},'記事の表は出目7〜10／2・11／6のみ。LSで扱いを決めてください'))}
+
+// ---- 一覧表
+function renderMatrix(){const t=el('table',{class:'mx'}),hr=el('tr',{},el('th',{},'ジョブ'));
+ PHASES.forEach((p,i)=>hr.append(el('th',{class:i===pi?'curcol':'',onclick:()=>{setPhase(i,true);showTab('battle')}},p.hp+'｜'+p.label)));t.append(el('thead',{},hr));
+ const tb=el('tbody');const all=el('tr',{},el('th',{style:'--c:#5d7a92'},'全員'));PHASES.forEach((p,i)=>all.append(el('td',{class:i===pi?'curcol':'',onclick:()=>{setPhase(i,true);showTab('battle')}},actList(p.all,''))));tb.append(all);
+ for(const j of JOBS){const tr=el('tr',{class:job===j.id?'sel':''},el('th',{style:'--c:var(--'+j.id+')'},j.name));
+  PHASES.forEach((p,i)=>tr.append(el('td',{class:i===pi?'curcol':'',onclick:()=>{setJob(j.id);setPhase(i,true);showTab('battle')}},actList(p.jobs[j.id].do,''))));tb.append(tr)}
+ t.append(tb);$('matrix').replaceChildren(t)}
+
+// ---- 事前チェック
+let checks=store.get('arebati.checks',{});
+function renderPrep(){const box=$('prepBox');box.replaceChildren();
+ for(const j of JOBS){if(job!=='all'&&j.id!==job)continue;const done=j.prep.filter((_,i)=>checks[j.id+i]).length;
+  const c=el('div',{class:'prep',style:'--c:var(--'+j.id+')'},el('h3',{},j.name+'　',el('span',{class:'prog'},done+' / '+j.prep.length)),el('div',{style:'font-size:11px;color:var(--muted);margin-bottom:4px'},j.role));
+  j.prep.forEach(([t],i)=>{const k=j.id+i;const cb=el('input',{type:'checkbox'});cb.checked=!!checks[k];cb.addEventListener('change',()=>{checks[k]=cb.checked;store.set('arebati.checks',checks);renderPrep()});c.append(el('label',{class:cb.checked?'chk':''},cb,el('span',{},t)))});box.append(c)}}
+$('prepReset').onclick=()=>{if(confirm('この端末のチェックを全解除しますか？')){checks={};store.set('arebati.checks',checks);renderPrep()}};
+
+// ---- タブ
+function showTab(t){tab=t;for(const b of document.querySelectorAll('.tab'))b.setAttribute('aria-selected',String(b.dataset.tab===t));for(const k of['battle','matrix','prep','video'])$('tab-'+k).classList.toggle('hidden',k!==t);if(t==='matrix')renderMatrix();if(t==='prep')renderPrep()}
+for(const b of document.querySelectorAll('.tab'))b.onclick=()=>showTab(b.dataset.tab);
+$('printBtn').onclick=()=>window.print();
+
+// ---- 動画（YouTube IFrame API・手動ブックマーク）
+const VIDS={A:{id:'IUVoTOXzPPQ',title:'白魔道士・ナイト目線'},B:{id:'8j_RGlLJNeY',title:'風＆吟視点'}};
+let vsrc='A',player=null,pReady=false,pLoading=false,follow=true,lastFollow=-1;
+let bms=store.get('arebati.bookmarks',{A:{},B:{}});
+const cleanBms=raw=>{const out={A:{},B:{}};for(const v of['A','B'])if(raw&&raw[v]&&typeof raw[v]==='object')for(const[id,s]of Object.entries(raw[v]))if(PHASES.some(p=>p.id===id)&&Number.isFinite(Number(s))&&Number(s)>=0)out[v][id]=Number(s);return out};
+bms=cleanBms(bms);
+const sorted=()=>PHASES.map((p,i)=>({i,id:p.id,s:bms[vsrc][p.id]})).filter(x=>x.s!==undefined);
+const orderOk=b=>{const l=PHASES.map(p=>b[p.id]).filter(x=>x!==undefined);return l.every((x,i)=>i===0||x>l[i-1])};
+function setMsg(t,c=''){$('bmMsg').textContent=t;$('bmMsg').className='msg '+c}
+function statusMsg(){const n=sorted().length;if(!pReady)return setMsg(pLoading?'YouTubeプレイヤーを読み込み中…':'プレイヤーを読み込んでください。','warn');
+ if(n===0)setMsg('登録なし。動画を止めて、その位置の局面を登録してください。','warn');else if(n===1)setMsg('1点登録済み。登録点以降は追従しますが、他の局面は未登録です。','warn');else setMsg(n+'点登録済み。動画位置に合わせて局面が切り替わります（登録点の間は直前の局面）。','ok')}
+function renderBms(){const box=$('bmList');box.replaceChildren();
+ PHASES.forEach((p,i)=>{const s=bms[vsrc][p.id];box.append(el('div',{class:'bm'+(i===pi?' cur':'')},s!==undefined?el('button',{class:'btn small t',onclick:()=>{if(pReady){player.seekTo(s,true)}setPhase(i,false)}},fmt(s)):el('span',{class:'t unset'},'未登録'),el('span',{class:'nm'},p.hp+'｜'+p.title)))});statusMsg()}
+function switchVid(v){vsrc=v;for(const b of document.querySelectorAll('.vsrc'))b.setAttribute('aria-pressed',String(b.dataset.v===v));const url='https://www.youtube.com/watch?v='+VIDS[v].id;$('ytLink').href=url;$('ytLink2').href=url;if(pReady)player.cueVideoById(VIDS[v].id);lastFollow=-1;renderBms()}
+for(const b of document.querySelectorAll('.vsrc'))b.onclick=()=>switchVid(b.dataset.v);
+function failVideo(t){pLoading=false;pReady=false;$('ytPh').classList.remove('hidden');$('ytPh').replaceChildren(el('b',{},'動画を表示できません'),el('span',{},t+' ',el('a',{href:'https://www.youtube.com/watch?v='+VIDS[vsrc].id,target:'_blank',rel:'noopener noreferrer'},'YouTubeで直接見る ↗')),el('span',{style:'margin-top:6px'},'作戦ガイド本体は動画なしでも使えます。'));setMsg(t,'warn')}
+function loadVideo(){if(pReady){player.cueVideoById(VIDS[vsrc].id);return}if(pLoading)return;pLoading=true;statusMsg();
+ if(location.protocol==='file:')setMsg('file:// で開いているため再生できない場合があります。その場合はローカルHTTPサーバーで開くか、YouTubeで直接見てください。','warn');
+ window.onYouTubeIframeAPIReady=()=>{try{player=new YT.Player('ytPlayer',{videoId:VIDS[vsrc].id,playerVars:{playsinline:1,rel:0},events:{onReady:()=>{pReady=true;pLoading=false;$('ytPh').classList.add('hidden');renderBms()},onError:e=>failVideo('YouTube側で再生できません（エラー '+e.data+'）。埋め込み不可の可能性があります。')}})}catch(e){failVideo('プレイヤー初期化に失敗しました。')}};
+ if(window.YT&&YT.Player){window.onYouTubeIframeAPIReady();return}
+ const sc=document.createElement('script');sc.src='https://www.youtube.com/iframe_api';sc.onerror=()=>failVideo('YouTube APIを取得できません（オフライン等）。');document.head.append(sc);
+ setTimeout(()=>{if(pLoading&&!pReady)failVideo('読み込みがタイムアウトしました。')},15000)}
+$('vload').onclick=loadVideo;
+PHASES.forEach((p,i)=>$('bmPhase').append(el('option',{value:p.id},(i+1)+'. '+p.hp+'｜'+p.title)));
+$('bmSet').onclick=()=>{if(!pReady)return setMsg('先にプレイヤーを読み込んでください。','warn');const t=player.getCurrentTime();if(!Number.isFinite(t))return setMsg('再生位置を取得できません。','warn');
+ const id=$('bmPhase').value,next={...bms[vsrc],[id]:Math.round(t*10)/10};if(!orderOk(next))return setMsg('前後の局面と時刻の順番が矛盾します（'+fmt(t)+'）。位置を確認してください。','warn');
+ bms[vsrc]=next;store.set('arebati.bookmarks',bms);const idx=PHASES.findIndex(p=>p.id===id);if(idx<PHASES.length-1)$('bmPhase').value=PHASES[idx+1].id;renderBms()};
+$('bmDel').onclick=()=>{delete bms[vsrc][$('bmPhase').value];store.set('arebati.bookmarks',bms);renderBms()};
+$('bmFollow').onclick=()=>{follow=!follow;$('bmFollow').setAttribute('aria-pressed',String(follow));$('bmFollow').textContent='局面を動画に追従：'+(follow?'ON':'OFF')};
+$('bmExport').onclick=()=>{const data={schema:'arebati-v25-battle2-bookmarks/1',battle:2,videos:VIDS,bookmarks:bms,method:'目視による手動登録（自動検出ではない）',exportedAt:new Date().toISOString()};
+ const u=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=el('a',{href:u,download:'arebati_v25_bookmarks.json'});document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)};
+$('bmImport').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{const j=JSON.parse(t);const c=cleanBms(j.bookmarks||j);if(!orderOk(c.A)||!orderOk(c.B))throw new Error('order');bms=c;store.set('arebati.bookmarks',bms);renderBms();setMsg('JSONを読み込みました。','ok')}).catch(()=>setMsg('JSONを読み込めません（形式または時刻順の矛盾）。','warn'));e.target.value=''};
+function videoJumpToPhase(){if(!pReady||!follow)return;const s=bms[vsrc][PHASES[pi].id];if(s!==undefined){player.seekTo(s,true);lastFollow=pi}}
+setInterval(()=>{if(!pReady)return;let t;try{t=player.getCurrentTime()}catch(e){return}$('vclock').textContent=fmt(t);if(!follow)return;
+ const l=sorted().filter(x=>x.s<=t+.05);if(!l.length)return;const i=l[l.length-1].i;if(i!==lastFollow){lastFollow=i;if(i!==pi){pi=i;store.set('arebati.phase',pi);renderBattle()}}},300);
+
+// ---- 全体
+function renderBattle(){renderRail();renderPhase();renderMap();if(tab==='matrix')renderMatrix();if(!$('tab-video').classList.contains('hidden'))renderBms();else if(pReady)renderBms()}
+function renderAll(){renderBattle();renderTimers();renderPrep();if(tab==='matrix')renderMatrix()}
+window.addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;if(e.key==='ArrowRight')setPhase(pi+1,true);else if(e.key==='ArrowLeft')setPhase(pi-1,true)});
+$('gimmicks').append(actList(GIMMICKS,'acts small'));
+buildJobBar();buildRail();buildLegend();buildWS();renderAll();renderBms();
+})();
+</script>
+</body>
+</html>

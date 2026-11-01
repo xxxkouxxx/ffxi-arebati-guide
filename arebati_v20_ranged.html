@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arebati V20 遠隔1戦</title>
+<meta name="description" content="Arebati Veng+20 を遠隔1戦方式で倒す流れと各ジョブの動きを、場面ごと・ジョブごとに整理した予習ページ">
+<style>
+:root{
+  --bg:#0b1622;--panel:#122233;--panel2:#0e1c2b;--line:#24394f;--text:#e8f0f8;--muted:#9db0c4;
+  --accent:#4fd1c5;--accent-ink:#06201d;--warn:#f2c46b;--warn-bg:#3a2e14;
+  --p-article:#6ea8ff;--p-assumption:#f2c46b;--p-unverified:#9aa7b4;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.65 system-ui,-apple-system,"Segoe UI","Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif}
+a{color:var(--accent)}
+button,select{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:8px 12px}
+button:hover{border-color:var(--accent)}
+button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+button[aria-pressed="true"]{background:#1d3b4a;border-color:var(--accent)}
+.wrap{max-width:1280px;margin:0 auto;padding:20px 16px 40px}
+header h1{margin:4px 0 2px;font-size:clamp(22px,4vw,32px);line-height:1.25}
+.kicker{font-size:12px;letter-spacing:.14em;color:var(--accent);font-weight:700}
+.sub{color:var(--muted);margin:0}
+.ptabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 6px}
+.ptabs button{font-weight:700;padding:10px 16px;border-radius:12px}
+.lead{margin:6px 0 0;font-size:14px}
+.howto{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 0;padding:0;list-style:none;font-size:13px;color:var(--muted)}
+.howto li{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+.howto b{color:var(--text)}
+.notice{margin:14px 0;padding:10px 14px;border-radius:12px;background:var(--warn-bg);border:1px solid #6b5420;font-size:13px}
+.picker{position:sticky;top:0;z-index:5;background:linear-gradient(var(--bg) 80%,transparent);padding:10px 0 12px}
+.picker-label{font-size:13px;color:var(--muted);margin-bottom:6px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-weight:700;min-height:42px}
+.chip i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:16px}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:16px}
+.col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.card>h2{margin:0;padding:14px 16px;font-size:16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.body{padding:14px 16px}
+.small{font-size:13px;color:var(--muted)}
+.mapbox{position:relative;background:radial-gradient(circle at 50% 45%,#1b3346,#0c1825 70%)}
+.mapbox svg{display:block;width:100%;height:auto}
+.hp{padding:10px 16px 0}
+.hpbar{height:10px;background:#2a1c25;border-radius:99px;overflow:hidden}
+.hpbar>div{height:100%;background:linear-gradient(90deg,#ff6b81,#ff9aa6);width:100%}
+.hprow{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;gap:8px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;padding:8px 16px 0;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
+.transport{padding:12px 16px 16px}
+.transport input[type=range]{width:100%;accent-color:var(--accent)}
+.trow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.trow .grp{display:flex;gap:8px;flex-wrap:wrap}
+.clock{font-variant-numeric:tabular-nums;font-weight:700}
+.badges{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.phase{font-size:12px;font-weight:800;padding:3px 10px;border-radius:99px;background:#1d3b4a;color:var(--accent)}
+.prov{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;border:1px solid;white-space:nowrap}
+.prov.article{color:var(--p-article);border-color:var(--p-article)}
+.prov.assumption{color:var(--p-assumption);border-color:var(--p-assumption)}
+.prov.unverified{color:var(--p-unverified);border-color:var(--p-unverified)}
+.src{font-size:11px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 6px;white-space:nowrap}
+.scene-title{font-size:20px;margin:8px 0 2px;line-height:1.35}
+.trigger{font-size:13px;color:var(--warn);margin:0 0 6px}
+.mine{margin-top:12px;padding:12px;border-radius:12px;border:2px solid var(--accent);background:#0f2a2c}
+.mine h3{margin:0 0 6px;font-size:14px;color:var(--accent)}
+.act{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;padding:8px 0;border-top:1px dashed var(--line)}
+.act:first-child{border-top:0}
+.role{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:26px;padding:0 6px;border-radius:8px;font-size:13px;font-weight:800;color:#06131d}
+.act .do{font-weight:700}
+.act .meta{grid-column:2;font-size:13px;color:var(--muted)}
+.act.dim{opacity:.45}
+.tl{list-style:none;margin:0;padding:0}
+.tl button{width:100%;text-align:left;display:grid;grid-template-columns:44px 1fr;gap:2px 10px;border:0;border-radius:0;border-left:3px solid transparent;padding:9px 14px;background:transparent}
+.tl button:hover{background:#16293b}
+.tl button.active{background:#173244;border-left-color:var(--accent)}
+.tl .n{color:var(--accent);font-weight:800;font-size:13px}
+.tl .ttl{font-weight:700}
+.tl .ph{grid-column:2;font-size:12px;color:var(--muted)}
+.tl .star{color:var(--accent);font-size:12px;font-weight:800;margin-left:6px}
+.sheet ol{margin:8px 0 0;padding-left:20px}
+.sheet li{margin:6px 0}
+.sheet ul{margin:6px 0 0;padding-left:18px;font-size:14px}
+.sheet .rolehead{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:8px 0 0;font-size:14px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border-top:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:700;font-size:13px;white-space:nowrap}
+.tablewrap{overflow-x:auto}
+.glist{margin:0;padding-left:18px}
+.glist li{margin:4px 0}
+.vids{display:grid;gap:12px}
+.vid{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel2)}
+.vid .frame{position:relative;aspect-ratio:16/9;background:#000;display:flex;align-items:center;justify-content:center}
+.vid .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vid .meta{padding:10px 12px;font-size:13px}
+.vid .meta b{font-size:14px}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px;background:#1d3b4a;color:var(--accent);margin-left:6px}
+footer{margin-top:24px;font-size:12px;color:var(--muted)}
+footer ul{padding-left:18px}
+.legend-prov{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+@media (max-width:900px){.grid,.grid2{grid-template-columns:1fr}}
+@media (max-width:600px){.picker{position:static}.chip{padding:6px 12px;min-height:38px}}
+@media print{
+  body{background:#fff;color:#000}
+  .wrap>*:not(.print-area){display:none!important}
+  .print-area{display:block!important}
+  .print-area>*:not(.sheetcard){display:none!important}
+  .sheetcard{border:0;background:#fff}
+  .sheetcard h2 button{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">FFXI · ODYSSEY SHEOL GAOL · 予習</div>
+    <h1 id="title">Arebati Veng+20 遠隔1戦方式</h1>
+    <p class="sub">遠隔（狩人・コルセア）で削り切る1戦方式の、全体の流れと各ジョブの動き。</p>
+    <div class="ptabs" id="ptabs" role="tablist" aria-label="作戦パターン"></div>
+    <p class="lead" id="lead"></p>
+    <ul class="howto">
+      <li><b>①</b> 作戦パターンを選ぶ</li>
+      <li><b>②</b> 自分のジョブを選ぶ</li>
+      <li><b>③</b> 図を再生するか、流れの場面を押して「あなたのやること」を見る</li>
+    </ul>
+    <div class="notice">図の位置・移動・HP・秒数は説明用の仮のものです（実際の時間や距離ではありません）。行動の内容は各出典の記載をまとめたもので、出典の記号（S・L・V・K）を付けています。</div>
+  </header>
+
+  <nav class="picker" aria-label="あなたのジョブ">
+    <div class="picker-label">あなたのジョブ（選ぶと自分の行動が強調されます）</div>
+    <div class="chips" id="jobChips"></div>
+  </nav>
+
+  <div class="grid">
+    <div class="col">
+      <section class="card" aria-labelledby="hMap">
+        <h2 id="hMap">戦術図 <span class="small">上から見た模式図（演出用）</span></h2>
+        <div class="mapbox">
+          <svg id="map" viewBox="0 0 1000 560" role="img" aria-label="戦術模式図">
+            <defs><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="context-stroke"/></marker></defs>
+            <g id="gZones"></g><g id="gTrails"></g><g id="gFx"></g><g id="gUnits"></g><g id="gLabels"></g>
+          </svg>
+        </div>
+        <div class="hp">
+          <div class="hprow"><span><b>Arebati</b> HP <span class="small">（演出用・記事にある節目は75%と残り3割のみ）</span></span><b id="hpText">100%</b></div>
+          <div class="hpbar"><div id="hpBar"></div></div>
+        </div>
+        <div class="legend" id="legend"></div>
+        <div class="transport">
+          <input type="range" id="seek" min="0" max="120" step="0.1" value="0" aria-label="デモ時刻">
+          <div class="trow">
+            <span class="clock"><span id="dClock">00:00</span> / <span id="dTotal">02:00</span> <span class="small">（圧縮デモ）</span></span>
+            <div class="grp">
+              <button id="play" class="primary">▶ 再生</button>
+              <button id="prev">◀ 前の場面</button>
+              <button id="next">次の場面 ▶</button>
+              <button id="speed" title="再生速度">1×</button>
+              <button id="trail" aria-pressed="true">軌跡</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="col">
+      <section class="card" aria-labelledby="hScene" aria-live="polite">
+        <h2 id="hScene">いまの場面</h2>
+        <div class="body">
+          <div class="badges"><span class="phase" id="sPhase"></span><span class="small" id="sNo"></span><span id="sProv"></span></div>
+          <h3 class="scene-title" id="sTitle"></h3>
+          <p class="trigger" id="sTrigger"></p>
+          <p style="margin:0" id="sSummary"></p>
+          <div class="mine" id="mine"></div>
+          <details style="margin-top:12px" open>
+            <summary class="small" style="cursor:pointer">この場面の全員の動き</summary>
+            <div id="sActs"></div>
+          </details>
+        </div>
+      </section>
+      <section class="card" aria-labelledby="hTl">
+        <h2 id="hTl">全体の流れ <span class="small">押すとその場面へ</span></h2>
+        <ol class="tl" id="timeline"></ol>
+      </section>
+    </div>
+  </div>
+
+  <div class="grid2 print-area">
+    <section class="card sheet sheetcard" aria-labelledby="hSheet">
+      <h2 id="hSheet"><span id="sheetTitle">ジョブ別の役割</span><button id="printBtn">印刷 / PDF</button></h2>
+      <div class="body" id="sheet"></div>
+    </section>
+    <section class="card" aria-labelledby="hGim">
+      <h2 id="hGim">ボスの特徴と注意する特殊技</h2>
+      <div class="body">
+        <ul class="glist" id="gimmicks"></ul>
+        <div class="tablewrap" style="margin-top:12px"><table id="moves"><thead><tr><th>特殊技</th><th>効果（自己中心範囲）</th><th>対応</th></tr></thead><tbody></tbody></table></div>
+        <p class="small" style="margin:8px 0 0">特殊技の表は出典Sより。</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="card" style="margin-top:16px" aria-labelledby="hCmp">
+    <h2 id="hCmp">2つのパターンの違い</h2>
+    <div class="body tablewrap">
+      <table>
+        <thead><tr><th></th><th>ナイト型（剣ナ狩コ詩風）</th><th>赤魔型（剣狩コ赤吟風）</th></tr></thead>
+        <tbody>
+          <tr><th>護衛の処理</th><td>ナイトが受け持つ（プリュウェン＋常時リアクト＋ファランクス）</td><td>狩の影縫い→赤のスリプルIIで寝かせ続ける</td></tr>
+          <tr><th>剣の回復</th><td>ナイト</td><td>赤魔道士</td></tr>
+          <tr><th>防御ダウン</th><td>なし（狩・コの火力が大事）</td><td>ディアIII＋ライトショットで防御23%ダウン（S）</td></tr>
+          <tr><th>持ち込みエントラ</th><td>インデフェイド（剣）・インデリフレシュ（ナ）・インデスト（狩かコ）</td><td>記載なし（風水士本人はエントラストインデアジル）</td></tr>
+          <tr><th>ボルスター</th><td>開幕から</td><td>HP75%から</td></tr>
+          <tr><th>長所</th><td>護衛による壊滅事故がほぼ無くなる（L）</td><td>火力が出しやすい（S）</td></tr>
+          <tr><th>注意点</th><td>ナイトのMP切れ／ヘイトが低すぎると突撃される（L）</td><td>スリプルの効果時間管理／エフェクトで護衛の弱体が解除（V）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:16px" aria-labelledby="hVid">
+    <h2 id="hVid">参考動画 <span class="small">再生はYouTube公式プレイヤー。押すまで読み込みません</span></h2>
+    <div class="body">
+      <p class="small" style="margin:0 0 10px">遠隔1戦方式そのものの動画は、ナイト型では見つかりませんでした。赤魔型に近い編成の海外動画と、2戦方式の動画を参考として載せています。</p>
+      <div class="vids" id="vids"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="legend-prov">印：<span class="prov article">出典</span>出典に記載　<span class="prov unverified">要確認</span>出典間の食い違い・未確認</div>
+    <ul id="sources"></ul>
+    <p>このページは各出典の内容を要約した独自の整理です。FFXIのゲーム素材や動画は複製していません。</p>
+  </footer>
+</div>
+<script>
+/* Arebati Veng+20 遠隔1戦方式 — 戦術データ（index.html に埋め込み用。単体でも読める）
+ * src: S=ストライク氏まとめ画像(2022/6/15) L=【暗黒】【紳士】(2022/5/25) V=Two Man Cell(2022/2/7) K=FF11人生を捧げるブログ(2022/5/21)
+ * prov: article=出典に記載 / assumption=説明用の仮定 / unverified=未確認・出典間で食い違い
+ */
+window.GUIDE = {
+  title: 'Arebati Veng+20 遠隔1戦方式',
+  boss: 'Arebati',
+  sources: {
+    S: { name: 'ストライク@FF11「アレバティVeng+20（遠隔1戦方式）」まとめ画像', date: '2022-06-15', url: 'https://twitter.com/strikeret/status/1536997213515448320', blog: 'https://strikeret.hatenablog.com/entry/2022/12/13/092201' },
+    L: { name: '【暗黒】【紳士】「アレバティ Veng+20 比較的楽に倒せました。」', date: '2022-05-25', url: 'http://blog.livedoor.jp/ff11lakshmi/archives/1980769.html' },
+    V: { name: 'Two Man Cell「Arebati Veng+20」', date: '2022-02-07', url: 'https://vanafratello.com/arebati-veng20' },
+    K: { name: 'FF11人生を捧げるブログ「Veng+20 Arebati 討伐 ※動画付き」（2戦方式）', date: '2022-05-21', url: 'https://www.kagurazakac.com/entry/2022/05/21/000000' }
+  },
+  gimmicks: [
+    { t: 'ポラーロアでエフェクトを纏う。以降、特殊技のたびにサークル「Zisurru」を召喚', src: 'S', prov: 'article' },
+    { t: 'エフェクト中は氷属性を吸収し、特殊技を連続で使う。氷ベースの連携（闇など）も吸収されるので注意', src: 'S V', prov: 'article' },
+    { t: 'クリティカルの数に応じて赤弱点→青弱点。赤弱点でZisurruが消え、青弱点でエフェクトが解除', src: 'S', prov: 'article' },
+    { t: '残りHP75%で「八重霞」＋ランダムなダウン系スフィア＋護衛（ラズ族NM）が沸く', src: 'S L', prov: 'article' },
+    { t: 'エフェクトが発生すると、護衛に入れた弱体はすべて解除される', src: 'V K', prov: 'article' },
+    { t: '護衛が沸くタイミングを「HP80%あたりのSPアビ発動と同時」と書く記事もある（75%説と食い違い）', src: 'K', prov: 'unverified' },
+    { t: '通常攻撃に防御ダウン（-25%）や魔法防御力ダウンが付く → パナケイアで治す', src: 'S', prov: 'article' }
+  ],
+  moves: [
+    { name: 'グラッシーノヴァ', eff: '氷属性ダメージ＋全強化消去（食事込み）＋全ステータスダウン', note: '必要な強化をかけ直す' },
+    { name: 'グレーシャルトゥーム', eff: '氷属性ダメージ＋装備変更不可', note: '剣は各装備セットにカットを入れておく' },
+    { name: 'バイティングアブロゲーション', eff: 'ダメージ＋麻痺＋強化複数消去＋ノックバック', note: '必要な強化をかけ直す' },
+    { name: 'ポラーロア', eff: '氷属性ダメージ＋バインド＋ノックバック（エフェクト発生）', note: '以降は連携が吸収されないよう注意' }
+  ],
+  patterns: [
+    {
+      id: 'pld', label: 'ナイト型（剣ナ狩コ詩風）', short: 'ナイト型',
+      lead: '護衛をナイトが受け持ち、剣の回復もナイトが担う形。護衛による事故が少ない代わりに、ディアIIIなどの防御ダウンが無いので狩・コの火力が大事。',
+      src: 'S L',
+      roles: [
+        { id: 'RUN', short: '剣', name: '魔導剣士', color: '#6ea8ff', duty: '本体の盾（角で固定キープ）', entrust: 'インデフェイド',
+          notes: ['エンボルド＋クルセードからフルアビでタゲを維持', '氷属性ダメージが主なのでイグニスを維持', '強化を消されたら自前でシェル・バブリザ・ファランクス', '装備変更不可に備え、全装備セットにダメージカットを確保', '防御ダウン・魔防ダウンはパナケイアで治す'], src: 'S' },
+        { id: 'PLD', short: 'ナ', name: 'ナイト', color: '#b9c7d8', duty: '剣の回復＋護衛の受け持ち', entrust: 'インデリフレシュ',
+          notes: ['終始離れた位置から剣を回復。余裕があれば剣にプロテス', '護衛を受け持つためヘイト2位を目指す（最初から稼ぎすぎると本体がこちらに向く）', 'MPが切れがち（記事Lではメンバーのバザーで補給）'], src: 'S L' },
+        { id: 'RNG', short: '狩', name: '狩人', color: '#5fd39a', duty: 'メインアタッカー（遠隔）', entrust: 'インデスト（狩かコ）',
+          notes: ['ダブルショット＋ホバーショット、アナイアレイターでカラナック連打', 'エフェクト後はカラナック→カラナックの闇連携を避け、ラストスタンドを混ぜる', 'ワイルドカードまでにオーバーキルも使う', '万一護衛が来たら影縫いで止める'], src: 'S' },
+        { id: 'COR', short: 'コ', name: 'コルセア', color: '#ffc35c', duty: 'ロール＋サブアタッカー（遠隔）', entrust: 'インデスト（狩かコ）',
+          notes: ['ロールはクルケサムライ、カオス', 'トリプルショットを使いつつフォーマルハウトのラストスタンド連打', 'ダブルショット・トリプルショットのリキャを見て、その場でランダムディールとワイルドカード', '残り3割くらいでWSをワイルドファイアに切り替え（記事L）'], src: 'S L' },
+        { id: 'BRD', short: '詩', name: '吟遊詩人', color: '#b49bff', duty: '歌の維持', entrust: '—',
+          notes: ['ソウルクラリから 前衛：メヌエット×4＋俊敏エチュード＋ダージュ', '盾・後衛：栄典・バラード×2・氷カロル1・シルベント', 'ボスにエレジー', '以降は剣の歌が消えたらシルベント・マーチ×2・バラード×2、狩・コの歌も維持'], src: 'S' },
+        { id: 'GEO', short: '風', name: '風水士', color: '#ff9f7a', duty: '風水＋持ち込みエントラ', entrust: '（配る側）',
+          notes: ['ロビーで必要なエントラストを付与（剣・ナ・狩orコ）', '開幕からボルスター・ジオフューリー・インデアジル', 'エントラストのインデストが切れたら掛け直す'], src: 'S' }
+      ],
+      events: [
+        { id: 'p1', t: 0, phase: '準備', title: 'ロビーで持ち込みエントラ', trigger: '突入前', src: 'S', prov: 'article',
+          summary: '風水士が剣・ナ・狩（またはコ）にインデを持ち込ませる。',
+          acts: [['GEO', 'エントラスト：インデフェイド（剣）・インデリフレシュ（ナ）・インデスト（狩かコ）', '全員', '戦闘中の持続支援']] },
+        { id: 'p2', t: 8, phase: '準備', title: '突入場所で歌・ロール・強化', trigger: 'BF突入後', src: 'S L', prov: 'article',
+          summary: '突入した場所で強化を済ませてから釣りに行く。',
+          acts: [['BRD', 'ソウルクラリから前衛・盾後衛に別々の歌', '全員', '役割ごとに必要な歌が違う'], ['COR', 'クルケサムライ、カオス', '全員', '攻撃力・TP効率'], ['PLD', 'マジェスティ＋プロテス、自己強化', '全員／自分', '下地'], ['RUN', 'イグニス・強化', '自分', '氷属性ダメージ対策']] },
+        { id: 'p3', t: 18, phase: '開幕', title: '剣が釣って角でキープ', trigger: '強化完了', src: 'S L', prov: 'article',
+          summary: '剣がボスを釣り、ノックバックしても困らない角（柱の横）で固定する。ナイトは剣のところでヘイトの下地を作る。',
+          acts: [['RUN', '釣って定位置（角）でキープ', 'ボス', 'ノックバック対策'], ['PLD', '剣のところでフラッシュ・センチネル・ランパート', 'ボス', 'ヘイト2位の下地（記事L）']] },
+        { id: 'p4', t: 28, phase: '開幕', title: '位置取り', trigger: 'キープ後', src: 'S L', prov: 'article',
+          summary: 'ナは剣にケアルが届き、護衛もキープできる位置へ。狩以外はホバーショットの邪魔にならない位置（羅盤も含む）。',
+          acts: [['PLD', '剣にケアルが届く＋護衛をキープできる場所へ移動', '—', '75%以降に備える'], ['GEO', '羅盤をホバーショットの邪魔にならない位置へ', '—', '狩の移動を妨げない'], ['COR', 'ホバーショットの邪魔にならない位置へ', '—', '同上']] },
+        { id: 'p5', t: 38, phase: '削り', title: '遠隔で削る／ナはヘイト2位を作る', trigger: '戦闘開始', src: 'S L', prov: 'article',
+          summary: '狩のカラナックとコのラストスタンドで削る。ナイトは剣を回復しながら、75%までに敵対2位になるようヘイトを上げる。',
+          acts: [['RNG', 'ダブルショット＋ホバーショットでカラナック連打', 'ボス', '主火力'], ['COR', 'トリプルショット＋ラストスタンド連打', 'ボス', '副火力'], ['GEO', 'ボルスター・ジオフューリー・インデアジル', 'ボス／狩コ', '開幕から'], ['BRD', 'ボスにエレジー', 'ボス', '弱体'], ['PLD', '剣にケアル・プロテス／ヘイト2位を目指す', '剣', '稼ぎすぎに注意']] },
+        { id: 'p6', t: 52, phase: 'エフェクト', title: 'ポラーロア → エフェクト', trigger: 'ポラーロア', src: 'S', prov: 'article',
+          summary: '以後は特殊技のたびにZisurruが出て、氷属性と氷ベースの連携を吸収する。強化消去技も続く。',
+          acts: [['RNG', 'カラナック連続の闇連携を避け、ラストスタンドを混ぜる', 'ボス', '連携吸収で回復させない'], ['RUN', '消された強化を自前でかけ直し（シェル・バブリザ・ファランクス）', '自分', '強化消去技'], ['BRD', '剣の歌が消えたらシルベント・マーチ×2・バラード×2', '剣', '歌の維持'], ['PLD', '強化を消された剣にプロテス', '剣', '余裕があれば']] },
+        { id: 'p7', t: 68, phase: 'HP75%', title: '八重霞＋スフィア＋護衛pop', trigger: '残りHP75%', src: 'S L', prov: 'article',
+          summary: '護衛（ラズ族NM）はナイトが受け持つ。ナイトは盾を持ち替え、常時リアクトとファランクスで壁を背に耐えながら剣を回復する。',
+          acts: [['PLD', 'プリュウェンに持ち替え＋常時リアクト＋ファランクス、壁を背に', '護衛', 'ファストキャストで剣にケアルも続ける'], ['RNG', '万一護衛が来たら影縫い', '護衛', '事故防止'], ['RUN', 'ボスのタゲを維持', 'ボス', '—']] },
+        { id: 'p8', t: 92, phase: '終盤', title: '残り3割：火力を出し切る', trigger: '残りHP30%前後', src: 'L S', prov: 'article',
+          summary: 'コルセアはWSをワイルドファイアへ、狩は全力で削る。ワイルドカードとオーバーキルもここまでに。',
+          acts: [['COR', 'WSをワイルドファイアに切り替え／ランダムディール・ワイルドカード', 'ボス', '記事L'], ['RNG', '全力で削る／オーバーキル', 'ボス', 'ワイカ発動までに']] },
+        { id: 'p9', t: 112, phase: '討伐', title: '削り切り', trigger: '—', src: 'L', prov: 'article',
+          summary: '記事Lでは魔法攻撃力ダウンスフィアを引いて残り4分ちょっとで討伐。失敗も何度かあった、とのこと。',
+          acts: [['PLD', 'ヘイト抑えめになりすぎない（1回突撃された例あり）', '—', '記事L']] }
+      ],
+      units: [
+        ['boss', 'enemy', 'BOSS', 'AREBATI', '#ff8a96', 30, null, [[0, 470, 230]]],
+        ['add', 'enemy', '護衛', 'ラズ族NM', '#e3a877', 20, 68, [[0, 210, 470]]],
+        ['RUN', 'role', null, null, null, 19, null, [[0, 440, 70], [18, 440, 70], [24, 420, 295]]],
+        ['PLD', 'role', null, null, null, 19, null, [[0, 480, 70], [18, 480, 70], [24, 430, 330], [28, 430, 330], [34, 260, 430]]],
+        ['RNG', 'role', null, null, null, 19, null, [[0, 520, 70], [28, 520, 70], [36, 600, 500]]],
+        ['COR', 'role', null, null, null, 19, null, [[0, 400, 110], [28, 400, 110], [36, 730, 470]]],
+        ['BRD', 'role', null, null, null, 19, null, [[0, 460, 110], [28, 460, 110], [36, 480, 510]]],
+        ['GEO', 'role', null, null, null, 19, null, [[0, 520, 110], [28, 520, 110], [36, 830, 420]]]
+      ],
+      fx: [
+        [0, 7, 'label', 'GEO', null, null, 'エントラスト（ロビー）', '#ff9f7a', -45],
+        [8, 17, 'label', 'BRD', null, null, '歌・ロール・マジェスティ', '#cfe3ff', -60],
+        [18, 27, 'line', 'PLD', 'boss', 'hate', 'フラッシュ・センチネル', null, 0],
+        [38, 112, 'line', 'RNG', 'boss', 'ranged', null, null, 0],
+        [38, 112, 'line', 'COR', 'boss', 'ranged', null, null, 0],
+        [38, 112, 'pulse', 'RNG', 'boss', 'ws', 'カラナック', [6, .3, 0], 0],
+        [38, 112, 'pulse', 'COR', 'boss', 'ws', 'ラストスタンド', [6, .3, 3], 0],
+        [38, 112, 'line', 'PLD', 'RUN', 'heal', null, null, 0],
+        [38, 50, 'line', 'BRD', 'boss', 'debuff', 'エレジー', null, 0],
+        [52, 64, 'label', 'boss', null, null, 'エフェクト：氷・連携を吸収', '#9fd8ff', -60],
+        [68, 90, 'line', 'PLD', 'add', 'hate', 'リアクト＋プリュウェン', null, 0],
+        [68, 80, 'label', 'boss', null, null, '八重霞＋スフィア', '#ffd28a', -60],
+        [92, 104, 'label', 'COR', null, null, 'ワイルドファイア／ワイカ', '#ffc35c', -45]
+      ],
+      hp: [[0, 100], [68, 75], [92, 30], [120, 0]],
+      duration: 120,
+      zones: 'pld'
+    },
+    {
+      id: 'rdm', label: '赤魔型（剣狩コ赤吟風）', short: '赤魔型',
+      lead: '護衛を赤魔道士が寝かせ続ける形。ディアIII＋ライトショットで防御を下げられるので火力が出しやすい（記事S）一方、スリプル管理の負担が大きい。',
+      src: 'V S',
+      roles: [
+        { id: 'RUN', short: '剣', name: '魔導剣士', color: '#6ea8ff', duty: '本体の盾（抜刀せずキープ）', entrust: '—',
+          notes: ['通常攻撃でクリティカルを出さないよう抜刀しない', '強化を消されたらファランクスを最優先でかけ直す'], src: 'V' },
+        { id: 'RNG', short: '狩', name: '狩人', color: '#5fd39a', duty: 'メインアタッカー（遠隔）', entrust: '—',
+          notes: ['常時ホバーショットでアナイアレイターのカラナック連打（ターゲットを取りにくい）', 'WSはコルセアと交互。コが遅れたらラストスタンドを混ぜて闇連携を防ぐ', '護衛が沸いたら即影縫い'], src: 'V' },
+        { id: 'COR', short: 'コ', name: 'コルセア', color: '#ffc35c', duty: 'ロール＋サブアタッカー（遠隔）', entrust: '—',
+          notes: ['ロールはクルケッドカオス＆サムライ', 'フォーマルハウトのラストスタンド連打', 'ランダムディール→ワイルドカード→ランダムディールでダブル・トリプルショットを回復'], src: 'V' },
+        { id: 'RDM', short: '赤', name: '赤魔道士', color: '#ff6b6b', duty: '剣の回復＋護衛のスリプルキープ', entrust: '—',
+          notes: ['自分のスリプルの効果時間を把握しておく', 'ディアIIIで防御ダウン（コのライトショットと合わせて防御23%ダウン：記事S）'], src: 'V S' },
+        { id: 'BRD', short: '吟', name: '吟遊詩人', color: '#b49bff', duty: '歌の維持', entrust: '—',
+          notes: ['マーチ・メヌエット×3・ダージュ（記事表記「マチメヌメヌメヌダー」）', '剣・赤・風にはそれぞれ別の歌、剣にシルベント'], src: 'V' },
+        { id: 'GEO', short: '風', name: '風水士', color: '#ff9f7a', duty: '風水', entrust: '—',
+          notes: ['インデフューリー・ジオフレイル・エントラストインデアジル', '開幕はグローリーブレイズ＋サークルエンリッチ', 'ボルスターはHP75%から'], src: 'V' }
+      ],
+      events: [
+        { id: 'r1', t: 0, phase: '開幕', title: '強化と開幕の風水', trigger: '戦闘前〜開幕', src: 'V', prov: 'article',
+          summary: '歌・ロールを入れ、風水士はグローリーブレイズ＋サークルエンリッチでジオを置く。',
+          acts: [['GEO', 'グローリーブレイズ＋サークルエンリッチ → ジオフレイル／インデフューリー／エントラストインデアジル', 'ボス／全員', '開幕の火力'], ['BRD', 'マーチ・メヌエット×3・ダージュ、剣にシルベント', '全員', '—'], ['COR', 'クルケッドカオス＆サムライ', '全員', '—']] },
+        { id: 'r2', t: 14, phase: '削り', title: '剣が抜刀せずキープ／遠隔で削る', trigger: '釣り後', src: 'V', prov: 'article',
+          summary: '剣はクリティカルを出さないよう抜刀しない。狩はホバーショットでカラナック、コはラストスタンド。WSは交互に撃つ。',
+          acts: [['RUN', '抜刀せずにキープ', 'ボス', 'クリティカルを出さない'], ['RNG', 'ホバーショット＋カラナック連打', 'ボス', '最後までタゲを取りにくい'], ['COR', 'ラストスタンド連打', 'ボス', '狩と交互'], ['RDM', '剣の回復、ディアIII', '剣／ボス', '—']] },
+        { id: 'r3', t: 36, phase: 'エフェクト', title: 'エフェクト発生（多くは75%前）', trigger: 'ポラーロア（与TPが多く75%前に来ることが多い）', src: 'V', prov: 'article',
+          summary: 'エフェクトが出ると護衛の弱体が解除される。一度出たら最後まで消さずに戦う。闇連携は吸収されるので注意。',
+          acts: [['RNG', 'コが遅れたらラストスタンドを混ぜて闇連携を防ぐ', 'ボス', '連携吸収'], ['RUN', 'ファランクス最優先でかけ直し', '自分', '強化消去']] },
+        { id: 'r4', t: 52, phase: 'HP75%', title: '護衛pop → 影縫い → スリプルII', trigger: '残りHP75%（記事S・L）', src: 'V S', prov: 'article',
+          summary: '沸いた瞬間に狩が影縫い、その間に赤が連続魔＋サボトゥールでスリプルII。風水士はここからボルスター。',
+          acts: [['RNG', '影縫い', '護衛', '寝かせるまでの時間稼ぎ'], ['RDM', '連続魔＋サボトゥール → スリプルII', '護衛', '寝かせてキープ'], ['GEO', 'ボルスター', '—', '75%から']] },
+        { id: 'r5', t: 74, phase: '中盤', title: 'スリプル2回目の準備', trigger: '1回目のスリプルが切れる前', src: 'V', prov: 'article',
+          summary: '切れる前にバインド＆グラビデIIを入れ、起きたらスタイミー＋サボトゥール＋スリプルIIで寝かせ直す。基本はこの2回で削り切る。',
+          acts: [['RDM', 'バインド＆グラビデII → 起きたらスタイミー＋サボトゥール＋スリプルII', '護衛', '安全に寝かせ直す'], ['RNG', '火力不足なら影縫いでつなぐ', '護衛', '猶予を作る']] },
+        { id: 'r6', t: 92, phase: '終盤', title: 'ワイルドカードで押し切る', trigger: 'タイミングは記事に記載なし', src: 'V', prov: 'article',
+          summary: 'ランダムディール→ワイルドカード→ランダムディールでダブル・トリプルショットを回して削り切る。',
+          acts: [['COR', 'ランダムディール→ワイルドカード→ランダムディール', '自分／全員', 'ダブル・トリプルショット回復']] },
+        { id: 'r7', t: 110, phase: '討伐', title: '削り切り', trigger: '—', src: 'V', prov: 'article',
+          summary: '記事Vではワイルドカードが成功して約11分でクリア。遠隔は手動操作の差が出やすいので、ホバーショットを含めた練習が大事。',
+          acts: [] }
+      ],
+      units: [
+        ['boss', 'enemy', 'BOSS', 'AREBATI', '#ff8a96', 30, null, [[0, 470, 230]]],
+        ['add', 'enemy', '護衛', 'ラズ族NM', '#e3a877', 20, 52, [[0, 210, 470]]],
+        ['RUN', 'role', null, null, null, 19, null, [[0, 440, 70], [8, 440, 70], [14, 420, 295]]],
+        ['RNG', 'role', null, null, null, 19, null, [[0, 520, 70], [10, 520, 70], [18, 600, 500]]],
+        ['COR', 'role', null, null, null, 19, null, [[0, 400, 110], [10, 400, 110], [18, 730, 470]]],
+        ['RDM', 'role', null, null, null, 19, null, [[0, 480, 70], [10, 480, 70], [18, 340, 420]]],
+        ['BRD', 'role', null, null, null, 19, null, [[0, 460, 110], [10, 460, 110], [18, 480, 510]]],
+        ['GEO', 'role', null, null, null, 19, null, [[0, 520, 110], [10, 520, 110], [18, 830, 420]]]
+      ],
+      fx: [
+        [0, 10, 'label', 'GEO', null, null, 'グローリーブレイズ＋サークルエンリッチ', '#ff9f7a', -45],
+        [14, 110, 'line', 'RNG', 'boss', 'ranged', null, null, 0],
+        [14, 110, 'line', 'COR', 'boss', 'ranged', null, null, 0],
+        [14, 110, 'pulse', 'RNG', 'boss', 'ws', 'カラナック', [6, .3, 0], 0],
+        [14, 110, 'pulse', 'COR', 'boss', 'ws', 'ラストスタンド', [6, .3, 3], 0],
+        [14, 110, 'line', 'RDM', 'RUN', 'heal', null, null, 0],
+        [14, 24, 'line', 'RDM', 'boss', 'debuff', 'ディアIII', null, 0],
+        [36, 48, 'label', 'boss', null, null, 'エフェクト：以後は消さない', '#9fd8ff', -60],
+        [52, 56, 'line', 'RNG', 'add', 'debuff', '影縫い', null, 0],
+        [55, 64, 'line', 'RDM', 'add', 'debuff', '連続魔サボ スリプルII', null, 0],
+        [56, 110, 'label', 'add', null, null, 'Zzz', '#cfe3ff', -36],
+        [74, 84, 'line', 'RDM', 'add', 'debuff', 'バインド・グラビデII → スリプルII', null, 0],
+        [92, 104, 'label', 'COR', null, null, 'ランダムディール→ワイカ', '#ffc35c', -45]
+      ],
+      hp: [[0, 100], [52, 75], [110, 0]],
+      duration: 120,
+      zones: 'rdm'
+    }
+  ],
+  videos: [
+    { id: '4g5z-OXUPLY', title: 'FFXI Odyssey Gaol A3 Arebati V20', author: 'LoneKenT', fit: '赤魔型に近い編成（剣狩コ風吟赤）と検索結果の説明にあり。未視聴', pattern: 'rdm' },
+    { id: 'G5rhD2n38_s', title: 'FF11 Veng+20 アトーンメント Arebati', author: 'かぐらざかカンパニー', fit: '2戦方式（1戦目 ナ剣赤＋コ吟＋狩）。遠隔部分の参考に', pattern: null },
+    { id: 'C4GkuPpOMgs', title: 'FFXI FF11 Arebati V20 (2 KI strat = easier)', author: 'NickoFF11 Twitch', fit: '2戦方式（狩学コ風吟剣）', pattern: null }
+  ]
+};
+</script>
+<script>
+(() => {
+  'use strict';
+  const G = window.GUIDE;
+  const $ = id => document.getElementById(id);
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const LS = 'arebati-v20:';
+  const PROV = { article: '出典', assumption: '演出用', unverified: '要確認' };
+  const FX = {
+    hate:   { color: '#8eb4ff', dash: '', w: 3, arrow: true },
+    debuff: { color: '#ff9a90', dash: '4 4', w: 2.4, arrow: true },
+    ws:     { color: '#ff7f88', dash: '', w: 3.4, arrow: true },
+    ranged: { color: '#ffc35c', dash: '1 7', w: 2, arrow: false },
+    heal:   { color: '#7be0a0', dash: '6 5', w: 2, arrow: true }
+  };
+  const h = (tag, attrs = {}, ...kids) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === 'class') n.className = v;
+      else if (k === 'style' && typeof v === 'object') Object.assign(n.style, v);
+      else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
+      else n.setAttribute(k, v);
+    }
+    for (const c of kids.flat()) if (c != null && c !== false) n.append(c instanceof Node ? c : String(c));
+    return n;
+  };
+  const s = (tag, attrs = {}, text) => { const n = document.createElementNS(SVGNS, tag); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); if (text != null) n.textContent = text; return n; };
+  const lsGet = k => { try { return localStorage.getItem(LS + k); } catch { return null; } };
+  const lsSet = (k, v) => { try { localStorage.setItem(LS + k, v); } catch { /* 保存できない環境でも動く */ } };
+  const mmss = v => { v = Math.max(0, Math.floor(v)); return `${String(Math.floor(v / 60)).padStart(2, '0')}:${String(v % 60).padStart(2, '0')}`; };
+  const provBadge = p => h('span', { class: `prov ${p}` }, PROV[p]);
+  const srcBadge = src => src ? h('span', { class: 'src', title: src.split(' ').map(k => G.sources[k] ? G.sources[k].name : k).join(' / ') }, src) : null;
+
+  const st = { p: null, roles: new Map(), job: 'ALL', time: 0, playing: false, speed: 1, trails: true, last: 0, lastIx: -1 };
+  const isMine = rid => st.job !== 'ALL' && rid === st.job;
+
+  // ---------- pattern / job ----------
+  function buildTabs() {
+    $('ptabs').replaceChildren(...G.patterns.map(p => h('button', { role: 'tab', 'data-id': p.id, 'aria-selected': 'false', 'aria-pressed': 'false', onclick: () => selectPattern(p.id) }, p.label)));
+  }
+  function selectPattern(id) {
+    st.p = G.patterns.find(p => p.id === id) || G.patterns[0];
+    lsSet('pattern', st.p.id);
+    for (const b of $('ptabs').children) { const on = b.dataset.id === st.p.id; b.setAttribute('aria-pressed', String(on)); b.setAttribute('aria-selected', String(on)); }
+    $('lead').replaceChildren(st.p.lead, ' ', srcBadge(st.p.src));
+    st.roles = new Map(st.p.roles.map(r => [r.id, r]));
+    $('seek').max = st.p.duration; $('dTotal').textContent = mmss(st.p.duration);
+    $('legend').replaceChildren(...st.p.roles.map(r => h('span', {}, h('i', { style: { background: r.color } }), r.name)));
+    const all = [{ id: 'ALL', name: '全体を見る', color: '#9db0c4' }, ...st.p.roles];
+    $('jobChips').replaceChildren(...all.map(r => h('button', { class: 'chip', 'data-id': r.id, 'aria-pressed': 'false', onclick: () => selectJob(r.id) }, h('i', { style: { background: r.color } }), r.name)));
+    buildZones(); buildTimeline(); renderVideos();
+    st.time = 0; st.playing = false; updatePlay();
+    const saved = lsGet('job');
+    selectJob(st.roles.has(saved) ? saved : 'ALL');
+  }
+  function selectJob(id) {
+    st.job = id; lsSet('job', id);
+    for (const b of $('jobChips').children) b.setAttribute('aria-pressed', String(b.dataset.id === id));
+    buildSheet(); buildTimeline(); st.lastIx = -1; render();
+  }
+
+  // ---------- sheet ----------
+  function buildSheet() {
+    const box = $('sheet');
+    if (st.job === 'ALL') {
+      $('sheetTitle').textContent = 'ジョブ別の役割';
+      box.replaceChildren(...st.p.roles.map(r => h('div', { style: { margin: '0 0 12px' } },
+        h('div', { class: 'rolehead' }, h('span', { class: 'role', style: { background: r.color } }, r.short), h('b', {}, r.name), h('span', {}, r.duty), srcBadge(r.src)),
+        r.entrust && r.entrust !== '—' ? h('div', { class: 'small' }, `持ち込みエントラ：${r.entrust}`) : null)),
+        h('p', { class: 'small' }, '上でジョブを選ぶと、そのジョブのやること一覧（印刷用）になります。'));
+      return;
+    }
+    const r = st.roles.get(st.job);
+    $('sheetTitle').textContent = `${r.name}のやること（${st.p.short}）`;
+    const steps = [];
+    st.p.events.forEach((e, i) => e.acts.forEach(a => { if (a[0] === r.id) steps.push({ e, i, a }); }));
+    box.replaceChildren(
+      h('div', { class: 'rolehead' }, h('span', { class: 'role', style: { background: r.color } }, r.short), h('b', {}, `役割：${r.duty}`), srcBadge(r.src)),
+      h('dl', { class: 'kv' }, h('dt', {}, '持ち込みエントラ'), h('dd', {}, r.entrust || '—')),
+      h('h3', { style: { fontSize: '14px', margin: '12px 0 0' } }, '基本'),
+      h('ul', {}, r.notes.map(n => h('li', {}, n))),
+      h('h3', { style: { fontSize: '14px', margin: '12px 0 0' } }, '場面ごと'),
+      h('ol', {}, steps.length ? steps.map(({ e, i, a }) => h('li', {},
+        h('b', {}, `${e.phase}｜`), a[1], a[2] && a[2] !== '—' ? `（→${a[2]}）` : '',
+        h('div', { class: 'small' }, `きっかけ：${e.trigger}${a[3] ? '　理由：' + a[3] : ''}`))) : h('li', {}, '場面ごとの固有の行動は出典にありません。'))
+    );
+  }
+
+  // ---------- timeline / scene ----------
+  function buildTimeline() {
+    $('timeline').replaceChildren(...st.p.events.map((e, i) => h('li', {}, h('button', { 'data-ix': i, onclick: () => { setTime(e.t); } },
+      h('span', { class: 'n' }, String(i + 1).padStart(2, '0')),
+      h('span', { class: 'ttl' }, e.title, e.acts.some(a => isMine(a[0])) ? h('span', { class: 'star' }, '★あなた') : null),
+      h('span', { class: 'ph' }, e.phase)))));
+  }
+  const currentIndex = t => { let ix = 0; st.p.events.forEach((e, i) => { if (e.t <= t + 1e-6) ix = i; }); return ix; };
+  function actRow(a, dim) {
+    const r = st.roles.get(a[0]);
+    return h('div', { class: `act${dim ? ' dim' : ''}` },
+      h('span', { class: 'role', style: { background: r.color } }, r.short),
+      h('span', { class: 'do' }, a[1]),
+      h('span', { class: 'meta' }, `対象：${a[2] || '—'}${a[3] ? '　理由：' + a[3] : ''}`));
+  }
+  function renderScene(ix) {
+    const e = st.p.events[ix];
+    $('sPhase').textContent = e.phase;
+    $('sNo').textContent = `場面 ${ix + 1} / ${st.p.events.length}`;
+    $('sProv').replaceChildren(provBadge(e.prov), ' ', srcBadge(e.src));
+    $('sTitle').textContent = e.title;
+    $('sTrigger').textContent = `きっかけ：${e.trigger}`;
+    $('sSummary').textContent = e.summary;
+    const mine = $('mine');
+    if (st.job === 'ALL') mine.hidden = true;
+    else {
+      mine.hidden = false;
+      const r = st.roles.get(st.job), acts = e.acts.filter(a => isMine(a[0]));
+      mine.replaceChildren(h('h3', {}, `${r.name}（あなた）のやること`),
+        ...(acts.length ? acts.map(a => actRow(a, false)) : [h('div', { class: 'small' }, `この場面で${r.name}固有の行動は出典にありません。基本：${r.duty}`)]));
+    }
+    $('sActs').replaceChildren(...(e.acts.length ? e.acts.map(a => actRow(a, st.job !== 'ALL' && !isMine(a[0]))) : [h('div', { class: 'small' }, '個別の行動の記載はありません。')]));
+    for (const b of $('timeline').querySelectorAll('button')) b.classList.toggle('active', Number(b.dataset.ix) === ix);
+  }
+
+  // ---------- map ----------
+  function buildZones() {
+    const g = $('gZones'); g.replaceChildren();
+    const wall = { stroke: '#9db0c4', 'stroke-opacity': '.45', 'stroke-width': 3, fill: 'none' };
+    g.append(s('polyline', { points: '150,345 380,345 380,20', ...wall }));
+    g.append(s('polyline', { points: '560,20 560,345 860,345', ...wall }));
+    g.append(s('rect', { x: 395, y: 20, width: 150, height: 120, rx: 8, fill: '#fff', 'fill-opacity': '.03', stroke: '#9db0c4', 'stroke-opacity': '.3', 'stroke-dasharray': '6 6' }));
+    g.append(s('text', { x: 470, y: 16, fill: '#9db0c4', 'font-size': 14, 'text-anchor': 'middle' }, '階段（突入位置）'));
+    for (const x of [395, 525]) { g.append(s('rect', { x, y: 305, width: 40, height: 40, fill: '#2a3d52', stroke: '#9db0c4', 'stroke-opacity': '.6' })); g.append(s('text', { x: x + 20, y: 330, fill: '#cfe3ff', 'font-size': 13, 'text-anchor': 'middle' }, '柱')); }
+    g.append(s('text', { x: 990, y: 552, fill: '#9db0c4', 'font-size': 12, 'text-anchor': 'end', opacity: '.8' }, '模式図：出典Sの配置図を参考にした概略。距離・方向は正確ではありません'));
+  }
+  const ease = q => q * q * (3 - 2 * q);
+  function posAt(keys, t) {
+    if (t <= keys[0][0]) return [keys[0][1], keys[0][2]];
+    for (let i = 1; i < keys.length; i++) if (t <= keys[i][0]) { const [ta, xa, ya] = keys[i - 1], [tb, xb, yb] = keys[i]; const q = ease((t - ta) / (tb - ta)); return [xa + (xb - xa) * q, ya + (yb - ya) * q]; }
+    const k = keys[keys.length - 1]; return [k[1], k[2]];
+  }
+  function hpAt(t) { const p = st.p.hp; if (t <= p[0][0]) return p[0][1]; for (let i = 1; i < p.length; i++) if (t <= p[i][0]) return p[i - 1][1] + (p[i][1] - p[i - 1][1]) * (t - p[i - 1][0]) / (p[i][0] - p[i - 1][0]); return p[p.length - 1][1]; }
+  function unit(u) {
+    const [id, kind, short, label, color, size, appear, keys] = u;
+    if (kind === 'role') { const r = st.roles.get(id); return { id, ally: true, role: id, short: r.short, label: r.name, color: r.color, size, appear, keys }; }
+    return { id, ally: false, short, label, color, size, appear, keys };
+  }
+  function renderMap() {
+    const t = st.time, units = st.p.units.map(unit).filter(u => u.appear == null || t >= u.appear);
+    const pos = {}, byId = {};
+    units.forEach(u => { pos[u.id] = posAt(u.keys, t); byId[u.id] = u; });
+    const gT = $('gTrails'), gF = $('gFx'), gU = $('gUnits'), gL = $('gLabels');
+    [gT, gF, gU, gL].forEach(g => g.replaceChildren());
+    if (st.trails) units.filter(u => u.ally).forEach(u => {
+      const pts = u.keys.filter(k => k[0] <= t).map(k => [k[1], k[2]]); pts.push(pos[u.id]);
+      if (pts.length > 1) gT.append(s('polyline', { points: pts.map(p => p.join(',')).join(' '), fill: 'none', stroke: u.color, 'stroke-width': isMine(u.id) ? 2.6 : 1.2, opacity: isMine(u.id) ? .7 : .25, 'stroke-dasharray': '5 6' }));
+    });
+    const labels = [];
+    for (const f of st.p.fx) {
+      const [from, to, type, a, b, style, text, extra, dy] = f;
+      if (t < from || t > to) continue;
+      if (type === 'label') { if (pos[a]) labels.push({ x: pos[a][0], y: pos[a][1] + dy, text, color: extra }); continue; }
+      if (type === 'pulse') { const [per, duty, off] = extra; if (((t + off) % per) / per >= duty) continue; }
+      const A = pos[a], B = pos[b]; if (!A || !B) continue;
+      const sty = FX[style], focus = st.job === 'ALL' || isMine(a);
+      const ang = Math.atan2(B[1] - A[1], B[0] - A[0]), ra = byId[a].size + 2, rb = byId[b].size + 6;
+      gF.append(s('line', { x1: A[0] + Math.cos(ang) * ra, y1: A[1] + Math.sin(ang) * ra, x2: B[0] - Math.cos(ang) * rb, y2: B[1] - Math.sin(ang) * rb,
+        stroke: sty.color, 'stroke-width': focus ? sty.w + (st.job !== 'ALL' ? 1 : 0) : sty.w * .7, 'stroke-dasharray': sty.dash, 'stroke-linecap': 'round', opacity: focus ? .95 : .22, ...(sty.arrow ? { 'marker-end': 'url(#arw)' } : {}) }));
+      if (text && focus) labels.push({ x: (A[0] + B[0]) / 2, y: (A[1] + B[1]) / 2 - 14, text, color: sty.color });
+    }
+    for (const u of units) {
+      const p = pos[u.id], mine = u.ally && isMine(u.id), dim = u.ally && st.job !== 'ALL' && !mine;
+      const g = s('g', { opacity: dim ? .5 : 1 });
+      if (u.ally) { g.setAttribute('style', 'cursor:pointer'); g.addEventListener('click', () => selectJob(u.id)); }
+      if (mine) g.append(s('circle', { cx: p[0], cy: p[1], r: u.size + 14, fill: u.color, 'fill-opacity': .12, stroke: u.color, 'stroke-width': 2, 'stroke-dasharray': '5 4' }));
+      if (!u.ally) g.append(s('circle', { cx: p[0], cy: p[1], r: u.size + 7, fill: u.color, 'fill-opacity': .12, stroke: u.color, 'stroke-opacity': .6, 'stroke-dasharray': '4 4' }));
+      g.append(s('circle', { cx: p[0], cy: p[1], r: u.size, fill: u.ally ? '#112132' : '#4e2332', stroke: u.color, 'stroke-width': mine ? 3.5 : 2.2 }));
+      g.append(s('text', { x: p[0], y: p[1] + 5, 'text-anchor': 'middle', fill: '#fff', 'font-size': u.short.length > 2 ? 12 : 15, 'font-weight': 800 }, u.short));
+      if (!u.ally || mine) g.append(s('text', { x: p[0], y: p[1] + u.size + 18, 'text-anchor': 'middle', fill: u.ally ? u.color : '#ffcbd0', 'font-size': 12, 'font-weight': 700 }, u.label));
+      gU.append(g);
+    }
+    for (const l of labels) {
+      const w = Math.max(60, Math.min(380, l.text.length * 13 + 20)), x = Math.min(1000 - w / 2 - 4, Math.max(w / 2 + 4, l.x)), y = Math.max(40, l.y);
+      gL.append(s('rect', { x: x - w / 2, y: y - 18, width: w, height: 26, rx: 7, fill: '#0a1c2d', stroke: l.color, 'stroke-opacity': .9 }));
+      gL.append(s('text', { x, y, 'text-anchor': 'middle', fill: l.color, 'font-size': 13, 'font-weight': 800 }, l.text));
+    }
+    const hp = hpAt(t); $('hpText').textContent = `${Math.round(hp)}%`; $('hpBar').style.width = `${hp}%`;
+  }
+
+  function render() {
+    const ix = currentIndex(st.time);
+    if (ix !== st.lastIx) { renderScene(ix); st.lastIx = ix; }
+    renderMap();
+    $('seek').value = st.time; $('dClock').textContent = mmss(st.time);
+  }
+  function setTime(t) { st.time = Math.min(st.p.duration, Math.max(0, t)); render(); }
+  function updatePlay() { $('play').textContent = st.playing ? '❚❚ 一時停止' : '▶ 再生'; }
+  function togglePlay() { if (st.time >= st.p.duration) setTime(0); st.playing = !st.playing; st.last = performance.now(); updatePlay(); }
+  function loop(now) {
+    const dt = Math.min((now - st.last) / 1000, .1); st.last = now;
+    if (st.playing) { setTime(st.time + dt * st.speed); if (st.time >= st.p.duration) { st.playing = false; updatePlay(); } }
+    requestAnimationFrame(loop);
+  }
+
+  // ---------- static sections ----------
+  function renderStatic() {
+    $('gimmicks').replaceChildren(...G.gimmicks.map(g => h('li', {}, g.t, ' ', g.prov !== 'article' ? provBadge(g.prov) : null, ' ', srcBadge(g.src))));
+    $('moves').tBodies[0].replaceChildren(...G.moves.map(m => h('tr', {}, h('td', {}, h('b', {}, m.name)), h('td', {}, m.eff), h('td', {}, m.note))));
+    $('sources').replaceChildren(...Object.entries(G.sources).map(([k, v]) => h('li', {}, h('b', {}, `${k}：`), h('a', { href: v.url, target: '_blank', rel: 'noopener' }, v.name), `（${v.date}）`, v.blog ? [' ／ ', h('a', { href: v.blog, target: '_blank', rel: 'noopener' }, 'ブログ')] : null)));
+  }
+  function renderVideos() {
+    const list = [...G.videos].sort((a, b) => (b.pattern === st.p.id) - (a.pattern === st.p.id));
+    $('vids').replaceChildren(...list.map(v => {
+      const frame = h('div', { class: 'frame' }, h('button', { class: 'primary', onclick: ev => {
+        const f = ev.currentTarget.parentNode;
+        f.replaceChildren(h('iframe', { src: `https://www.youtube.com/embed/${v.id}`, title: v.title, allow: 'encrypted-media; picture-in-picture; fullscreen', referrerpolicy: 'strict-origin-when-cross-origin', allowfullscreen: '' }));
+      } }, '▶ この動画を読み込む'));
+      return h('div', { class: 'vid' }, frame, h('div', { class: 'meta' },
+        h('b', {}, v.title), v.pattern === st.p.id ? h('span', { class: 'tag' }, 'このパターンに近い') : null,
+        h('div', { class: 'small' }, `${v.author} ／ ${v.fit}`),
+        h('a', { href: `https://www.youtube.com/watch?v=${v.id}`, target: '_blank', rel: 'noopener' }, 'YouTubeで開く ↗')));
+    }));
+  }
+
+  // ---------- wiring ----------
+  $('play').onclick = togglePlay;
+  $('prev').onclick = () => { const ix = currentIndex(st.time); const e = st.p.events[st.time - st.p.events[ix].t > 1 ? ix : Math.max(0, ix - 1)]; setTime(e.t); };
+  $('next').onclick = () => { const e = st.p.events.find(x => x.t > st.time + .2); if (e) setTime(e.t); };
+  $('seek').addEventListener('input', ev => setTime(Number(ev.target.value)));
+  $('speed').onclick = () => { st.speed = st.speed === 1 ? 2 : st.speed === 2 ? .5 : 1; $('speed').textContent = `${st.speed}×`; };
+  $('trail').onclick = () => { st.trails = !st.trails; $('trail').setAttribute('aria-pressed', String(st.trails)); render(); };
+  $('printBtn').onclick = () => window.print();
+  window.addEventListener('keydown', ev => {
+    if (['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON'].includes(ev.target.tagName)) return;
+    if (ev.code === 'Space') { ev.preventDefault(); togglePlay(); }
+    else if (ev.key === 'ArrowRight') $('next').click();
+    else if (ev.key === 'ArrowLeft') $('prev').click();
+  });
+
+  buildTabs(); renderStatic();
+  selectPattern(lsGet('pattern') || G.patterns[0].id);
+  requestAnimationFrame(now => { st.last = now; requestAnimationFrame(loop); });
+})();
+</script>
+</body>
+</html>

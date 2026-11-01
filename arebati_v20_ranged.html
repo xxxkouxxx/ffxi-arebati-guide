@@ -95,13 +95,6 @@ th{color:var(--muted);font-weight:700;font-size:13px;white-space:nowrap}
 .tablewrap{overflow-x:auto}
 .glist{margin:0;padding-left:18px}
 .glist li{margin:4px 0}
-.vids{display:grid;gap:12px}
-.vid{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel2)}
-.vid .frame{position:relative;aspect-ratio:16/9;background:#000;display:flex;align-items:center;justify-content:center}
-.vid .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.vid .meta{padding:10px 12px;font-size:13px}
-.vid .meta b{font-size:14px}
-.tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px;background:#1d3b4a;color:var(--accent);margin-left:6px}
 footer{margin-top:24px;font-size:12px;color:var(--muted)}
 footer ul{padding-left:18px}
 .legend-prov{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -223,13 +216,6 @@ footer ul{padding-left:18px}
     </div>
   </section>
 
-  <section class="card" style="margin-top:16px" aria-labelledby="hVid">
-    <h2 id="hVid">参考動画 <span class="small">再生はYouTube公式プレイヤー。押すまで読み込みません</span></h2>
-    <div class="body">
-      <p class="small" style="margin:0 0 10px">遠隔1戦方式そのものの動画は、ナイト型では見つかりませんでした。赤魔型に近い編成の海外動画と、2戦方式の動画を参考として載せています。</p>
-      <div class="vids" id="vids"></div>
-    </div>
-  </section>
 
   <footer>
     <div class="legend-prov">印：<span class="prov article">出典</span>出典に記載　<span class="prov unverified">要確認</span>出典間の食い違い・未確認</div>
@@ -413,11 +399,6 @@ window.GUIDE = {
       duration: 120,
       zones: 'rdm'
     }
-  ],
-  videos: [
-    { id: '4g5z-OXUPLY', title: 'FFXI Odyssey Gaol A3 Arebati V20', author: 'LoneKenT', fit: '赤魔型に近い編成（剣狩コ風吟赤）と検索結果の説明にあり。未視聴', pattern: 'rdm' },
-    { id: 'G5rhD2n38_s', title: 'FF11 Veng+20 アトーンメント Arebati', author: 'かぐらざかカンパニー', fit: '2戦方式（1戦目 ナ剣赤＋コ吟＋狩）。遠隔部分の参考に', pattern: null },
-    { id: 'C4GkuPpOMgs', title: 'FFXI FF11 Arebati V20 (2 KI strat = easier)', author: 'NickoFF11 Twitch', fit: '2戦方式（狩学コ風吟剣）', pattern: null }
   ]
 };
 </script>
@@ -471,7 +452,7 @@ window.GUIDE = {
     $('legend').replaceChildren(...st.p.roles.map(r => h('span', {}, h('i', { style: { background: r.color } }), r.name)));
     const all = [{ id: 'ALL', name: '全体を見る', color: '#9db0c4' }, ...st.p.roles];
     $('jobChips').replaceChildren(...all.map(r => h('button', { class: 'chip', 'data-id': r.id, 'aria-pressed': 'false', onclick: () => selectJob(r.id) }, h('i', { style: { background: r.color } }), r.name)));
-    buildZones(); buildTimeline(); renderVideos();
+    buildZones(); buildTimeline();
     st.time = 0; st.playing = false; updatePlay();
     const saved = lsGet('job');
     selectJob(st.roles.has(saved) ? saved : 'ALL');
@@ -629,19 +610,6 @@ window.GUIDE = {
     $('gimmicks').replaceChildren(...G.gimmicks.map(g => h('li', {}, g.t, ' ', g.prov !== 'article' ? provBadge(g.prov) : null, ' ', srcBadge(g.src))));
     $('moves').tBodies[0].replaceChildren(...G.moves.map(m => h('tr', {}, h('td', {}, h('b', {}, m.name)), h('td', {}, m.eff), h('td', {}, m.note))));
     $('sources').replaceChildren(...Object.entries(G.sources).map(([k, v]) => h('li', {}, h('b', {}, `${k}：`), h('a', { href: v.url, target: '_blank', rel: 'noopener' }, v.name), `（${v.date}）`, v.blog ? [' ／ ', h('a', { href: v.blog, target: '_blank', rel: 'noopener' }, 'ブログ')] : null)));
-  }
-  function renderVideos() {
-    const list = [...G.videos].sort((a, b) => (b.pattern === st.p.id) - (a.pattern === st.p.id));
-    $('vids').replaceChildren(...list.map(v => {
-      const frame = h('div', { class: 'frame' }, h('button', { class: 'primary', onclick: ev => {
-        const f = ev.currentTarget.parentNode;
-        f.replaceChildren(h('iframe', { src: `https://www.youtube.com/embed/${v.id}`, title: v.title, allow: 'encrypted-media; picture-in-picture; fullscreen', referrerpolicy: 'strict-origin-when-cross-origin', allowfullscreen: '' }));
-      } }, '▶ この動画を読み込む'));
-      return h('div', { class: 'vid' }, frame, h('div', { class: 'meta' },
-        h('b', {}, v.title), v.pattern === st.p.id ? h('span', { class: 'tag' }, 'このパターンに近い') : null,
-        h('div', { class: 'small' }, `${v.author} ／ ${v.fit}`),
-        h('a', { href: `https://www.youtube.com/watch?v=${v.id}`, target: '_blank', rel: 'noopener' }, 'YouTubeで開く ↗')));
-    }));
   }
 
   // ---------- wiring ----------

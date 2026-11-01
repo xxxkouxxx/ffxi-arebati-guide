@@ -8,6 +8,7 @@
 |---|---|
 | `arebati_v25_battle1_guide.html` | 1戦目ガイド（単一HTML） |
 | `arebati_v25_battle2_guide.html` | 2戦目ガイド（単一HTML）。ジョブ別の局面行動・NG・関係図・当日タイマー・WS閾値早見表・事前チェック・YouTube局面ブックマーク |
+| `arebati_add_pop.html` | 2戦目で護衛を即沸かせるコツ（かんたん解説・単一HTML）。正本は FF11_Brain の `outputs/arebati-add-pop/` |
 | `arebati_v20_ranged.html` | Veng+20 遠隔1戦方式（単一HTML）。全体の流れ・ジョブ別の動き（ナイト型／赤魔型）・特殊技。正本は FF11_Brain の `outputs/arebati-v20-guide/` |
 | `docs/dev_brief.md` | 開発依頼書（ガードレール・Human Gate） |
 
